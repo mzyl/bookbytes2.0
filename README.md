@@ -8,8 +8,9 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Build "booktext" out of "fulltext"
 - [x] Maybe begin random selection of paragraphs and/or books
 - [x] Random file selection
-- [] Select new book from ui
+- [ ] Select new book from ui
+- [ ] Address some "problems"
 
 ### Problems
 - Franklin Autobiography is a formatting mess.
-
+- Title formatting starts after first colon, makes bad things happen.
