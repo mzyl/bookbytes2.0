@@ -28,7 +28,13 @@ func NewBook() Book {
   }
 }
 
+var CurrentBook = NewBook()
+
 /*** Setter Functions ***/
+
+func GetNewBook() {
+  CurrentBook = NewBook()
+}
 
 func SetTitle(booktext []string) string {
   return Get(booktext, "Title")
@@ -41,7 +47,7 @@ func SetAuthor(booktext []string) string {
 func Get(booktext []string, attr string) (ret string) {
   for _, line := range booktext {
     if strings.Contains(line, attr) {
-      text := strings.SplitAfter(line, ":")
+      text := strings.SplitAfter(line, attr+":")
       ret = strings.TrimSpace(strings.Join(text[1:], " "))
       break;
     }
@@ -98,7 +104,7 @@ func SplitText(fullhtml []string) (booktext []string) {
 func BookPrinter(book Book) {
   fmt.Println("Title: ", book.title)
   fmt.Println("Author: ", book.author)
-  fmt.Println(book.booktext[book.paragraph])
+  //fmt.Println(book.booktext[book.paragraph])
   //fmt.Println(book.fulltext)
 }
 
