@@ -11,6 +11,10 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Random file selection
 - [x] Select new book from ui
 - [ ] Address some "problems"
+- [ ] Next paragraph button
+- [`] Previous paragraph button
+- [ ] Beginning of chapter button
+- [ ] Whole book in scrollable field
 
 ### Problems
 - Franklin Autobiography is a formatting mess.
