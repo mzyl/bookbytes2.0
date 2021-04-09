@@ -104,7 +104,8 @@
                     <div class="buttons">
                         <button class="button is-primary is-medium" onclick="generate()">Generate</button>
                         <button id="cb-copy" class="button is-small" onclick="copy()">Copy</button>
-                        <button class="button is-small" onclick="info()">Info</button>
+                        <button class="button is-small" onclick="info();showinfo()">Info</button>
+                        <button class="button is-primary is-medium" onclick="newbook();hideinfo()">New Book</button>
                     </div>
                     <h2 class="subtitle colored is-4">What is this actually about? 😗</h2>
                     <p>This page generates clickbait headlines on various tech topics. Your colleagues ignore your issues or pull requests? No problem! Send them a clickbait headline with a link to your issue and draw attention to yourself! 💸🤷</p>
@@ -152,6 +153,35 @@
                 document.getElementById("cb-twitter").href = "https://twitter.com/intent/tweet?text=" + encodeURI(data.headline + " https://clickbait.cbrgm.net")
                 document.getElementById("cb-copy").innerHTML = "Copy"
             })
+    }
+
+    async function newbook() {
+        await fetch('/newbook', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.title = "Clickbaiter - " + data.headline
+                document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("cb-twitter").href = "https://twitter.com/intent/tweet?text=" + encodeURI(data.headline + " https://clickbait.cbrgm.net")
+                document.getElementById("cb-copy").innerHTML = "Copy"
+            })
+    }
+
+    function hideinfo() {
+        var elem = document.getElementById("cb-info")
+        elem.style.display = "none";
+    }
+
+    function showinfo() {
+        var elem = document.getElementById("cb-info")
+        if (elem.style.display === "none") {
+          elem.style.display = "block";
+        } 
     }
 
     function copy() {
