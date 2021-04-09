@@ -21,6 +21,7 @@ type Response struct {
 	Headline string `json:"headline"`
 }
 
+
 func main() {
 	rand.Seed(time.Now().Unix())
 
@@ -30,13 +31,14 @@ func main() {
 
 	arg.MustParse(&c)
 
-  cbg := bookbytes.NewBook()
+  //cbg := bookbytes.CurrentBook
 
 	r := chi.NewRouter()
 	r.Get("/", HandleFunc(file("./web/index.html")))
 	r.Handle("/web/*", http.StripPrefix("/web", http.FileServer(http.Dir("./web"))))
-	r.Post("/generate", HandleFunc(generate(cbg)))
-  r.Post("/info", HandleFunc(info(cbg)))
+	r.Post("/generate", HandleFunc(generate(bookbytes.CurrentBook)))
+  r.Post("/info", HandleFunc(info(bookbytes.CurrentBook)))
+  r.Post("/newbook", HandleFunc(newbook(bookbytes.CurrentBook)))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
 		log.Fatal(err)
@@ -66,10 +68,10 @@ func file(filename string) HandlerFunc {
 	}
 }
 
-func generate(cbg bookbytes.Book) HandlerFunc {
+func generate(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetParagraph(cbg), // I don't think I should have to use a func?
+			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -82,10 +84,28 @@ func generate(cbg bookbytes.Book) HandlerFunc {
 	}
 }
 
-func info(cbg bookbytes.Book) HandlerFunc {
+func info(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetInfo(cbg), // I don't think I should have to use a func?
+			Headline: bookbytes.GetInfo(bookbytes.CurrentBook), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func newbook(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+    bookbytes.GetNewBook()
+    fmt.Println(bookbytes.GetTitle(bookbytes.CurrentBook))
+		var resp = Response{
+			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
