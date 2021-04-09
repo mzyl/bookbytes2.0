@@ -22,8 +22,14 @@ func GetFile() (filename string) {
   if err != nil {
     panic(err)
   }
-  randomfile = rand.Intn(len(files))
-  filename = files[randomfile]
+  for range files {
+    randomfile = rand.Intn(len(files))
+    fmt.Println(randomfile)
+    if randomfile != 0 {
+      filename = files[randomfile]
+      break
+    }
+  }
   fmt.Println()
   fmt.Println("./" + filename)
   return "./" + filename
