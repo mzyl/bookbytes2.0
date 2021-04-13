@@ -55,8 +55,9 @@ func Get(booktext []string, attr string) (ret string) {
   return ret
 }
 
-func SetParagraph(book Book) int {
-  return NewParagraph(book)
+func SetParagraph() int {
+  CurrentBook.paragraph = NewParagraph(CurrentBook)
+  return CurrentBook.paragraph 
 }
 
 func StripLicense(fullhtml []string) (bookstring string) {
@@ -87,7 +88,7 @@ func SplitText(fullhtml []string) (booktext []string) {
   begin := 0
   end := 0
   for i, line := range fullhtml {
-    if strings.Contains(line, "<p>") {
+    if strings.Contains(line, "<p") { // be on lookout for weird behavior because of this change
       begin = i+1
     } else if strings.Contains(line, "</p>") {
       end = i
@@ -121,7 +122,17 @@ func GetInfo(book Book) string {
 }
 
 func GetParagraph(book Book) string {
-  return book.booktext[SetParagraph(book)]
+  return book.booktext[SetParagraph()]
+}
+
+func GetNextParagraph(book Book) string {
+  CurrentBook.paragraph = NextParagraph(book)
+  return book.booktext[CurrentBook.paragraph]
+}
+
+func GetPreviousParagraph(book Book) string {
+  CurrentBook.paragraph = PreviousParagraph(book)
+  return book.booktext[CurrentBook.paragraph]
 }
 
 // Need new function to call new paragraph and "print"

@@ -103,8 +103,9 @@
                     <h2 id="cb-info" class="title is-2"></h2>
                     <div class="buttons">
                         <button class="button is-primary is-medium" onclick="generate()">Generate</button>
-                        <button id="cb-copy" class="button is-small" onclick="copy()">Copy</button>
                         <button class="button is-small" onclick="info();showinfo()">Info</button>
+                        <button class="button is-small" onclick="nextpg()">Next Paragraph</button>
+                        <button class="button is-small" onclick="prevpg()">Previous Paragraph</button>
                         <button class="button is-primary is-medium" onclick="newbook();hideinfo()">New Book</button>
                     </div>
 
@@ -148,6 +149,40 @@
             .then((data) => {
                 document.title = "Clickbaiter - " + data.headline
                 document.getElementById("cb-info").innerHTML = data.headline
+                document.getElementById("cb-twitter").href = "https://twitter.com/intent/tweet?text=" + encodeURI(data.headline + " https://clickbait.cbrgm.net")
+                document.getElementById("cb-copy").innerHTML = "Copy"
+            })
+    }
+
+    async function nextpg() {
+        await fetch('/nextpg', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.title = "Clickbaiter - " + data.headline
+                document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("cb-twitter").href = "https://twitter.com/intent/tweet?text=" + encodeURI(data.headline + " https://clickbait.cbrgm.net")
+                document.getElementById("cb-copy").innerHTML = "Copy"
+            })
+    }
+
+    async function prevpg() {
+        await fetch('/prevpg', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.title = "Clickbaiter - " + data.headline
+                document.getElementById("cb-headline").innerHTML = data.headline
                 document.getElementById("cb-twitter").href = "https://twitter.com/intent/tweet?text=" + encodeURI(data.headline + " https://clickbait.cbrgm.net")
                 document.getElementById("cb-copy").innerHTML = "Copy"
             })

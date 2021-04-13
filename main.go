@@ -38,6 +38,8 @@ func main() {
 	r.Handle("/web/*", http.StripPrefix("/web", http.FileServer(http.Dir("./web"))))
 	r.Post("/generate", HandleFunc(generate(bookbytes.CurrentBook)))
   r.Post("/info", HandleFunc(info(bookbytes.CurrentBook)))
+	r.Post("/nextpg", HandleFunc(nextpg(bookbytes.CurrentBook)))
+	r.Post("/prevpg", HandleFunc(prevpg(bookbytes.CurrentBook)))
   r.Post("/newbook", HandleFunc(newbook(bookbytes.CurrentBook)))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
@@ -88,6 +90,38 @@ func info(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
 			Headline: bookbytes.GetInfo(bookbytes.CurrentBook), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func nextpg(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetNextParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func prevpg(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetPreviousParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {

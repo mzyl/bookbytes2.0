@@ -64,10 +64,10 @@ func NewParagraph(book Book) (index int) {
   return index
 }
 
-func PreviousParagraph(book Book) int {
-  return book.paragraph - 1
-}
-
 func NextParagraph(book Book) int {
   return book.paragraph + 1
+}
+
+func PreviousParagraph(book Book) int {
+  return book.paragraph - 1
 }
