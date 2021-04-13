@@ -11,7 +11,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Random file selection
 - [x] Select new book from ui
 - [ ] Address some "problems"
-- [ ] Move New Book button
+- [ ] Better layout - Buttons on the side, maybe
 - [x] Next paragraph button
 - [x] Previous paragraph button
 - [ ] Beginning of chapter button
@@ -21,6 +21,9 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Able to display title and author
 - [x] Random selection of books and paragraph
 - [ ] Basic navigation through books i.e. forward, backward, beginning of chapter
+- [ ] Solution for reading more of the book i.e. forward-backward are not so great for dialog
+  - Scrollable field would be ideal
+  - Provide where to find the book and roughly where the user is i.e. 38% through
 - [ ] Basic web interface that isn't completely borrowed
 
 ### Problems
