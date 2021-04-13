@@ -11,10 +11,17 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Random file selection
 - [x] Select new book from ui
 - [ ] Address some "problems"
-- [ ] Next paragraph button
-- [ ] Previous paragraph button
+- [ ] Move New Book button
+- [x] Next paragraph button
+- [x] Previous paragraph button
 - [ ] Beginning of chapter button
 - [ ] Whole book in scrollable field
+
+### Goals for Release
+- [x] Able to display title and author
+- [x] Random selection of books and paragraph
+- [ ] Basic navigation through books i.e. forward, backward, beginning of chapter
+- [ ] Basic web interface that isn't completely borrowed
 
 ### Problems
 - Franklin Autobiography is a formatting mess.
