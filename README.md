@@ -27,7 +27,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [ ] Work with whole book library
 
 ### Problems
-- Franklin Autobiography is a formatting mess.
+- ~~Franklin Autobiography is a formatting mess.~~
 - Chapters are not all marked the same.....
 - ~~Title formatting starts after first colon, makes bad things happen.~~
   - Frankenstein has a br tag that messes things up a bit..
