@@ -64,6 +64,7 @@ func NewParagraph(book Book) (index int) {
   return index
 }
 
+// maybe shouldn't be here
 func NextParagraph(book Book) int {
   return book.paragraph + 1
 }

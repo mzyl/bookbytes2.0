@@ -40,6 +40,10 @@ func main() {
   r.Post("/info", HandleFunc(info(bookbytes.CurrentBook)))
 	r.Post("/nextpg", HandleFunc(nextpg(bookbytes.CurrentBook)))
 	r.Post("/prevpg", HandleFunc(prevpg(bookbytes.CurrentBook)))
+  r.Post("/chapter", HandleFunc(chapter(bookbytes.CurrentBook)))
+  r.Post("/nextchapter", HandleFunc(nextchapter(bookbytes.CurrentBook)))
+  r.Post("/prevchapter", HandleFunc(prevchapter(bookbytes.CurrentBook)))
+  r.Post("/beginning", HandleFunc(beginning(bookbytes.CurrentBook)))
   r.Post("/newbook", HandleFunc(newbook(bookbytes.CurrentBook)))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
@@ -122,6 +126,70 @@ func prevpg(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
 			Headline: bookbytes.GetPreviousParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func chapter(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetChapter(), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func nextchapter(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetNextChapter(), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func prevchapter(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetPreviousChapter(), // I don't think I should have to use a func?
+		}
+		b, err := json.Marshal(resp)
+		if err != nil {
+			return http.StatusInternalServerError, err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, string(b))
+
+		return http.StatusOK, nil
+	}
+}
+
+func beginning(bookbytes.Book) HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		var resp = Response{
+			Headline: bookbytes.GetFirstChapter(), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
