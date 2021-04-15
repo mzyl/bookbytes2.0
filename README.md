@@ -11,28 +11,29 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Random file selection
 - [x] Select new book from ui
 - [ ] Address some "problems"
-- [ ] Better layout - Buttons on the side, maybe
+- [x] Better layout - Buttons on the side, maybe
 - [x] Next paragraph button
 - [x] Previous paragraph button
-- [ ] Beginning of chapter button
-- [ ] Whole book in scrollable field
+- [x] Beginning of chapter button
+- [ ] Display title/author and the end at beginning and end of book
 
 ### Goals for Release
 - [x] Able to display title and author
 - [x] Random selection of books and paragraph
-- [ ] Basic navigation through books i.e. forward, backward, beginning of chapter
-- [ ] Solution for reading more of the book i.e. forward-backward are not so great for dialog
-  - Scrollable field would be ideal
-  - Provide where to find the book and roughly where the user is i.e. 38% through
+- [x] Basic navigation through books i.e. forward, backward, beginning of chapter
+- [x] Solution for reading more of the book i.e. forward-backward are not so great for dialog
+  - Field is now scrollable
 - [ ] Basic web interface that isn't completely borrowed
 - [ ] Work with whole book library
 
 ### Problems
 - Franklin Autobiography is a formatting mess.
+- Chapters are not all marked the same.....
 - ~~Title formatting starts after first colon, makes bad things happen.~~
   - Frankenstein has a br tag that messes things up a bit..
 - ~~Random file selection sometimes returns no file.~~
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
+- Can't get to final chapter because adding 2 becomes out of range
 
 ### Thoughts
 - Maybe we don't have a "scroll the whole book option"
