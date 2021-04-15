@@ -25,9 +25,17 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Scrollable field would be ideal
   - Provide where to find the book and roughly where the user is i.e. 38% through
 - [ ] Basic web interface that isn't completely borrowed
+- [ ] Work with whole book library
 
 ### Problems
 - Franklin Autobiography is a formatting mess.
 - ~~Title formatting starts after first colon, makes bad things happen.~~
   - Frankenstein has a br tag that messes things up a bit..
 - ~~Random file selection sometimes returns no file.~~
+- Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
+
+### Thoughts
+- Maybe we don't have a "scroll the whole book option"
+  - Instead, we have a chapter by chapter option
+    - "Read this chapter" | "Next Chapter" | "Previous Chapter" | "Start at the Beginning" (First Chapter)
+    - Later we can have accounts to save places in books
