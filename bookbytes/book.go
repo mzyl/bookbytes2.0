@@ -163,12 +163,12 @@ func GetParagraph(book Book) string {
 }
 
 func GetNextParagraph(book Book) string {
-  CurrentBook.paragraph = NextParagraph(book)
+  CurrentBook.paragraph = CurrentBook.paragraph + 1
   return book.booktext[CurrentBook.paragraph]
 }
 
 func GetPreviousParagraph(book Book) string {
-  CurrentBook.paragraph = PreviousParagraph(book)
+  CurrentBook.paragraph = CurrentBook.paragraph - 1
   return book.booktext[CurrentBook.paragraph]
 }
 
