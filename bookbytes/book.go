@@ -59,7 +59,7 @@ func Get(booktext []string, attr string) (ret string) {
       break;
     }
   }
-  return ret
+  return 
 }
 
 func SetChapterReferences(booktext []string) (chapref []int) {
@@ -68,6 +68,10 @@ func SetChapterReferences(booktext []string) (chapref []int) {
       chapref = append(chapref, i)
     }
   }
+  // maybe append once more at the very end?
+  // could append(chapref, len(booktext))?
+  // this would solve the not getting to the final chapter issue
+  // not sure what it would mean for the 'the end' idea..
   return
 }
 
