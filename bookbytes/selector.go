@@ -2,7 +2,6 @@ package bookbytes
 
 import (
   "os"
-  "fmt"
   "log"
   "time"
   "bufio"
@@ -24,14 +23,14 @@ func GetFile() (filename string) {
   }
   for range files {
     randomfile = rand.Intn(len(files))
-    fmt.Println(randomfile)
+    println(randomfile)
     if randomfile != 0 {
       filename = files[randomfile]
       break
     }
   }
-  fmt.Println()
-  fmt.Println("./" + filename)
+  println()
+  println("./" + filename)
   return "./" + filename
 }
 
@@ -55,7 +54,7 @@ func NewParagraph(book Book) (index int) {
   var randomparagraph int
   for range text {
     randomparagraph = rand.Intn(len(text))
-    fmt.Println(len(text[randomparagraph]))
+    println(len(text[randomparagraph]))
     if len(text[randomparagraph]) > 400 {
       index = randomparagraph
       break

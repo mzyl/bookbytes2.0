@@ -1,7 +1,6 @@
 package bookbytes
 
 import (
-  "fmt"
   "strings"
 )
 
@@ -79,9 +78,9 @@ func SetChapter() {
   var begin int
   var end int
   var beginindex int
-  fmt.Println("Current Paragraph Index: ", CurrentBook.paragraph)
+  println("Current Paragraph Index: ", CurrentBook.paragraph)
   for i, ref := range CurrentBook.chaprefs {
-    fmt.Println(i, ":", ref)
+    println(i, ":", ref)
     if ref > CurrentBook.paragraph {
       begin = CurrentBook.chaprefs[i-1]
       end = ref
@@ -89,7 +88,7 @@ func SetChapter() {
       break;
     }
   }
-  fmt.Println(begin, ":", end)
+  println(begin, ":", end)
   ret := strings.Join(CurrentBook.booktext[begin:end], " ")
   CurrentBook.currentchapref = beginindex
   CurrentBook.chapter = ret 
@@ -143,11 +142,11 @@ func SplitText(fullhtml []string) (booktext []string) {
 /*** Getter Functions ***/
 
 func BookPrinter(book Book) {
-  fmt.Println("Title: ", book.title)
-  fmt.Println("Author: ", book.author)
-  fmt.Println("Chapter References: ", book.chaprefs)
-  //fmt.Println(book.booktext[book.paragraph])
-  //fmt.Println(book.fulltext)
+  println("Title: ", book.title)
+  println("Author: ", book.author)
+  println("Chapter References: ", book.chaprefs)
+  //println(book.booktext[book.paragraph])
+  //println(book.fulltext)
 }
 
 func GetTitle(book Book) string {
