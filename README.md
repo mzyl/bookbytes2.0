@@ -25,6 +25,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Field is now scrollable
 - [ ] Basic web interface that isn't completely borrowed
 - [ ] Work with whole book library
+- [ ] Serve locally on server
 
 ### Problems
 - ~~Franklin Autobiography is a formatting mess.~~
