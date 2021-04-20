@@ -32,11 +32,11 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - ~~Franklin Autobiography is a formatting mess.~~
 - Chapters are not all marked the same.....
 - ~~Title formatting starts after first colon, makes bad things happen.~~
-  - Frankenstein has a br tag that messes things up a bit..
 - ~~Random file selection sometimes returns no file.~~
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
 - ~~Can't get to final chapter because adding 2 becomes out of range~~
 
 ### Thoughts
 - Should we see if struct construction can be done using go routines?
+  - Go routines don't seem to work with how I have the builder formated
 - Eventually would like to have accounts to save the reader's place
