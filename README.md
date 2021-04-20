@@ -16,6 +16,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Previous paragraph button
 - [x] Beginning of chapter button
 - [ ] Display title/author and the end at beginning and end of book
+  - Maybe only at the end? 
 
 ### Goals for Release
 - [x] Able to display title and author
