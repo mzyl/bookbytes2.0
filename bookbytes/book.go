@@ -61,16 +61,13 @@ func Get(booktext []string, attr string) (ret string) {
   return 
 }
 
-func SetChapterReferences(booktext []string) (chapref []int) {
+func SetChapterReferences(booktext []string) (chaprefs []int) {
   for i, line := range booktext {
     if strings.Contains(line, "name=\"chap") {
-      chapref = append(chapref, i)
+      chaprefs = append(chaprefs, i)
     }
   }
-  // maybe append once more at the very end?
-  // could append(chapref, len(booktext))?
-  // this would solve the not getting to the final chapter issue
-  // not sure what it would mean for the 'the end' idea..
+  chaprefs = append(chaprefs, len(booktext))
   return
 }
 
@@ -182,7 +179,7 @@ func GetChapter() string {
 // need to check if at beginning or end of book
 func GetNextChapter() string {
   begin := CurrentBook.chaprefs[CurrentBook.currentchapref+1]
-  end := CurrentBook.chaprefs[CurrentBook.currentchapref+2] // can't display last chapter because +2 is out of range
+  end := CurrentBook.chaprefs[CurrentBook.currentchapref+2] // BUG can't display last chapter because +2 is out of range
   ret := strings.Join(CurrentBook.booktext[begin:end], " ")
   CurrentBook.currentchapref = CurrentBook.currentchapref+1
   CurrentBook.chapter = ret 
