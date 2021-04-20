@@ -34,11 +34,8 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Frankenstein has a br tag that messes things up a bit..
 - ~~Random file selection sometimes returns no file.~~
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
-- Can't get to final chapter because adding 2 becomes out of range
+- ~~Can't get to final chapter because adding 2 becomes out of range~~
 
 ### Thoughts
-- Maybe we don't have a "scroll the whole book option"
-  - Instead, we have a chapter by chapter option
-    - "Read this chapter" | "Next Chapter" | "Previous Chapter" | "Start at the Beginning" (First Chapter)
-    - Later we can have accounts to save places in books
 - Should we see if struct construction can be done using go routines?
+- Eventually would like to have accounts to save the reader's place
