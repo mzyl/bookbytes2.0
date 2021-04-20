@@ -41,3 +41,4 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Instead, we have a chapter by chapter option
     - "Read this chapter" | "Next Chapter" | "Previous Chapter" | "Start at the Beginning" (First Chapter)
     - Later we can have accounts to save places in books
+- Should we see if struct construction can be done using go routines?
