@@ -17,6 +17,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Beginning of chapter button
 - [ ] Display title/author and the end at beginning and end of book
   - Maybe only at the end? 
+  - Append "The End" to final chapter
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -40,3 +41,14 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - Should we see if struct construction can be done using go routines?
   - Go routines don't seem to work with how I have the builder formated
 - Eventually would like to have accounts to save the reader's place
+
+### Ordered Plan
+- [ ] Set up server to download full library
+- [ ] Explore ideas for segmenting chapters and other print section formats
+- [ ] Host locally from server
+- [ ] Reimplement so each connection to site gets a different session
+- [ ] Add feedback solution
+- [ ] Finalize web interface
+- [ ] Replicate local server on digitalocean or similar
+- [ ] Link to domain name
+- [ ] Release and look for feedback
