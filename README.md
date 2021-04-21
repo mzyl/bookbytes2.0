@@ -44,7 +44,9 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - Eventually would like to have accounts to save the reader's place
 
 ### Ordered Plan
-- [ ] Set up server to download full library
+- [x] Set up server to download full library
+- [x] Pull html documents out of full library
+  - rsync can do this for me
 - [ ] Explore ideas for segmenting chapters and other print section formats
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
