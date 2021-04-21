@@ -131,7 +131,7 @@ func SplitText(fullhtml []string) (booktext []string) {
       booktext = append(booktext, strings.Join(fullhtml[begin:end], " "))
     } else if strings.Contains(line, "name=\"chap") {
       booktext = append(booktext, line)
-    }
+    } // TODO: implement else for end of ebook to append "<h5>The End</h5>" or something like that
   }
   return
 }
