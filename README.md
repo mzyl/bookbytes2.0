@@ -29,19 +29,22 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [ ] Basic web interface that isn't completely borrowed
 - [ ] Work with whole book library
 - [ ] Serve locally on server
+- [ ] Find font that contains virtually all characters
 
 ### Problems
-- ~~Franklin Autobiography is a formatting mess.~~
 - Chapters are not all marked the same.....
-- ~~Title formatting starts after first colon, makes bad things happen.~~
-- ~~Random file selection sometimes returns no file.~~
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
-- ~~Can't get to final chapter because adding 2 becomes out of range~~
+- 2/0/5/4/20542-h/20542-h.htm did not grab title or author
+  - it is in Duch, but that shouldn't effect anything...
+- 2/1/5/0/21509/21509-h/21509-h.htm returns only "Fin."
 
 ### Thoughts
-- Should we see if struct construction can be done using go routines?
-  - Go routines don't seem to work with how I have the builder formated
 - Eventually would like to have accounts to save the reader's place
+- May be a good idea to save "files" when getting a random file
+  - Otherwise it looks like it walks the whole directory over again
+- May want to filter for English texts
+- Selector file runs separately when server starts
+  - Hold current possible files that can be served using a different file
 
 ### Ordered Plan
 - [x] Set up server to download full library
