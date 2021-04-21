@@ -26,25 +26,28 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Basic navigation through books i.e. forward, backward, beginning of chapter
 - [x] Solution for reading more of the book i.e. forward-backward are not so great for dialog
   - Field is now scrollable
-- [ ] Basic web interface that isn't completely borrowed
 - [ ] Work with whole book library
-- [ ] Serve locally on server
+- [ ] Host locally on server
 - [ ] Find font that contains virtually all characters
 
 ### Problems
 - Chapters are not all marked the same.....
-- Same book is served to all users and changes made, i.e. new book/paragaph, effect all users
-- 2/0/5/4/20542-h/20542-h.htm did not grab title or author
-  - it is in Duch, but that shouldn't effect anything...
+- Same book is served to all users and changes made, i.e. new book/paragaph, effect all users.
+- Scrollable page and div doesn't work well on mobile.
+  - Also seems to be a slight input lag on mobile?
+- 2/0/5/4/20542-h/20542-h.htm did not grab title or author.
+  - it is in Dutch, but that shouldn't effect anything...
 - 2/1/5/0/21509/21509-h/21509-h.htm returns only "Fin."
+- 3/1/3/4/31342/31342-h/313420h.htm returns only "Fin."
+  - it is a small collection of poems.
 
 ### Thoughts
-- Eventually would like to have accounts to save the reader's place
-- May be a good idea to save "files" when getting a random file
-  - Otherwise it looks like it walks the whole directory over again
-- May want to filter for English texts
-- Selector file runs separately when server starts
-  - Hold current possible files that can be served using a different file
+- Eventually would like to have accounts to save the reader's place.
+- May be a good idea to save "files" when getting a random file.
+  - Otherwise it looks like it walks the whole directory over again.
+- May want to filter for English texts.
+- Selector file runs separately when server starts.
+  - Hold current possible files that can be served using a different file.
 
 ### Ordered Plan
 - [x] Set up server to download full library
@@ -53,6 +56,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [ ] Explore ideas for segmenting chapters and other print section formats
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
+  - Also should store library files to be accessed repeatedly instead of walking directory every time
 - [ ] Add feedback solution
 - [ ] Finalize web interface
 - [ ] Replicate local server on digitalocean or similar
