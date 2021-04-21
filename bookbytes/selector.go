@@ -12,10 +12,14 @@ import (
 func GetFile() (filename string) {
   var files []string
   var randomfile int
-  root := "./books"
+  //root := "./books" // for testing
+  root := "../library/htmlmirror"
   rand.Seed(time.Now().UnixNano())
   err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-    files = append(files, path)
+    if filepath.Ext(path) == ".htm" || filepath.Ext(path) == ".html" {
+      files = append(files, path)
+      println(path)
+    }
     return nil
   })
   if err != nil {
@@ -29,6 +33,7 @@ func GetFile() (filename string) {
       break
     }
   }
+  println(len(files))
   println()
   println("./" + filename)
   return "./" + filename
