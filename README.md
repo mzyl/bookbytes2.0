@@ -15,9 +15,10 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Next paragraph button
 - [x] Previous paragraph button
 - [x] Beginning of chapter button
-- [ ] Display title/author and the end at beginning and end of book
+- [x] Display title/author and the end at beginning and end of book
   - Maybe only at the end? 
   - Append "The End" to final chapter
+    - Final chapter ends with *Fin.*
 
 ### Goals for Release
 - [x] Able to display title and author
