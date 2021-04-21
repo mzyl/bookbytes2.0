@@ -129,7 +129,7 @@ func SplitText(fullhtml []string) (booktext []string) {
     } else if strings.Contains(line, "</p>") {
       end = i+1
       booktext = append(booktext, strings.Join(fullhtml[begin:end], " "))
-    } else if strings.Contains(line, "name=\"chap") {
+    } else if strings.Contains(line, "=\"chap") {
       booktext = append(booktext, line)
     }
   }
