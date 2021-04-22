@@ -48,6 +48,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - May want to filter for English texts.
 - Selector file runs separately when server starts.
   - Hold current possible files that can be served using a different file.
+    - May have been taken care of with File variable addition?
 
 ### Ordered Plan
 - [x] Set up server to download full library
@@ -56,7 +57,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [ ] Explore ideas for segmenting chapters and other print section formats
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
-  - Also should store library files to be accessed repeatedly instead of walking directory every time
+  - ~~Also should store library files to be accessed repeatedly instead of walking directory every time~~
 - [ ] Add feedback solution
 - [ ] Finalize web interface
 - [ ] Replicate local server on digitalocean or similar
