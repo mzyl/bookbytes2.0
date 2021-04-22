@@ -9,34 +9,41 @@ import (
   "path/filepath"
 )
 
+var Files []string
+
 func GetFile() (filename string) {
-  var files []string
   var randomfile int
-  //root := "./books" // for testing
-  root := "../library/htmlmirror"
   rand.Seed(time.Now().UnixNano())
-  err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-    if filepath.Ext(path) == ".htm" || filepath.Ext(path) == ".html" {
-      files = append(files, path)
-      println(path)
+  
+  if Files == nil {
+    //root := "./books" // for testing
+    root := "../library/htmlmirror"
+    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+      if filepath.Ext(path) == ".htm" || filepath.Ext(path) == ".html" {
+        Files = append(Files, path)
+        println(path)
+      }
+      return nil
+    })
+    if err != nil {
+      panic(err)
     }
-    return nil
-  })
-  if err != nil {
-    panic(err)
   }
-  for range files {
-    randomfile = rand.Intn(len(files))
+  
+  for range Files {
+    randomfile = rand.Intn(len(Files))
     println(randomfile)
     if randomfile != 0 {
-      filename = files[randomfile]
+      filename = Files[randomfile]
       break
     }
   }
-  println(len(files))
+
+  println(len(Files))
   println()
   println("./" + filename)
   return "./" + filename
+  //return "../library/htmlmirror/3/1/2/0/31200/31200-h/31200-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
