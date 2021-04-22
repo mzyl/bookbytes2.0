@@ -26,20 +26,20 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Basic navigation through books i.e. forward, backward, beginning of chapter
 - [x] Solution for reading more of the book i.e. forward-backward are not so great for dialog
   - Field is now scrollable
-- [ ] Work with whole book library
+- [x] Work with whole book library
 - [ ] Host locally on server
 - [ ] Find font that contains virtually all characters
 
 ### Problems
 - Chapters are not all marked the same.....
+  - This is working better, but not perfectly.
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users.
 - Scrollable page and div doesn't work well on mobile.
   - Also seems to be a slight input lag on mobile?
-- 2/0/5/4/20542-h/20542-h.htm did not grab title or author.
-  - it is in Dutch, but that shouldn't effect anything...
-- 2/1/5/0/21509/21509-h/21509-h.htm returns only "Fin."
 - 3/1/3/4/31342/31342-h/313420h.htm returns only "Fin."
   - it is a small collection of poems.
+  - encapsulated by <table> instead of <p>
+- Poe poems are encapsulated in <pre . . .> so they aren't pulled with <p>'s
 
 ### Thoughts
 - Eventually would like to have accounts to save the reader's place.
