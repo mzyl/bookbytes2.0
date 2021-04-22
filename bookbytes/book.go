@@ -1,6 +1,7 @@
 package bookbytes
 
 import (
+  "regexp"
   "strings"
 )
 
@@ -52,8 +53,9 @@ func SetAuthor(booktext []string) string {
 
 func Get(booktext []string, attr string) (ret string) {
   for _, line := range booktext {
-    if strings.Contains(line, attr) {
+    if strings.Contains(line, attr+":") {
       text := strings.SplitAfter(line, attr+":")
+      println(text)
       ret = strings.TrimSpace(strings.Join(text[1:], " "))
       break;
     }
@@ -62,12 +64,16 @@ func Get(booktext []string, attr string) (ret string) {
 }
 
 func SetChapterReferences(booktext []string) (chaprefs []int) {
+  match, _ := regexp.Compile("<h[1-6]")
+  //match, _ := regexp.Compile("<h[0-9 ]+>([a-zA-Z0-9 ]+)</h[0-9 ]+>\n+<h[0-9 ]+>[<>a-zA-Z0-9 ='\"]+page_")
   for i, line := range booktext {
-    if strings.Contains(line, "name=\"chap") {
+    //if strings.Contains(line, "name=\"chap") {
+    if match.MatchString(strings.ToLower(line)) {
       chaprefs = append(chaprefs, i)
     }
   }
   chaprefs = append(chaprefs, len(booktext))
+  println("Chapter Refs: ", chaprefs)
   return
 }
 
@@ -97,6 +103,7 @@ func SetParagraph() int {
 }
 
 func StripLicense(fullhtml []string) (bookstring string) {
+  // May need to have title and author come out of <pre> in the future
   var booktext []string
   begin := 0
   mid := 0
@@ -123,14 +130,18 @@ func StripLicense(fullhtml []string) (bookstring string) {
 func SplitText(fullhtml []string) (booktext []string) {
   begin := 0
   end := 0
+  match, _ := regexp.Compile("<h[1-6]")
   for i, line := range fullhtml {
-    if strings.Contains(line, "<p") { // be on lookout for weird behavior because of this change
+    if strings.Contains(strings.ToLower(line), "<p") {
       begin = i
-    } else if strings.Contains(line, "</p>") {
+    } else if strings.Contains(strings.ToLower(line), "</p>") {
       end = i+1
       booktext = append(booktext, strings.Join(fullhtml[begin:end], " "))
-    } else if strings.Contains(line, "=\"chap") {
+    //} else if strings.Contains(line, "=\"chap") {
+    //} else if strings.Contains(line, "<h2>") {
+    } else if match.MatchString(strings.ToLower(line)) {
       booktext = append(booktext, line)
+      booktext = append(booktext, fullhtml[i+1])
     }
   }
   booktext = append(booktext, "<h5><i>Fin.</i></h5>")
