@@ -38,13 +38,11 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Also seems to be a slight input lag on mobile?
 - 3/1/3/4/31342/31342-h/313420h.htm returns only "Fin."
   - it is a small collection of poems.
-  - encapsulated by "table" instead of "p"
-- Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s
+  - encapsulated by "table" instead of "p".
+- Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s.
 
 ### Thoughts
 - Eventually would like to have accounts to save the reader's place.
-- May be a good idea to save "files" when getting a random file.
-  - Otherwise it looks like it walks the whole directory over again.
 - May want to filter for English texts.
 - Selector file runs separately when server starts.
   - Hold current possible files that can be served using a different file.
@@ -55,9 +53,11 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Pull html documents out of full library
   - rsync can do this for me
 - [ ] Explore ideas for segmenting chapters and other print section formats
+  - Lots of progress made here thanks to PyrO
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
   - ~~Also should store library files to be accessed repeatedly instead of walking directory every time~~
+    - "Files" are now stored in global variable
 - [ ] Add feedback solution
 - [ ] Finalize web interface
 - [ ] Replicate local server on digitalocean or similar
