@@ -31,20 +31,19 @@ func main() {
 
 	arg.MustParse(&c)
 
-  //cbg := bookbytes.CurrentBook
 
 	r := chi.NewRouter()
 	r.Get("/", HandleFunc(file("./web/index.html")))
 	r.Handle("/web/*", http.StripPrefix("/web", http.FileServer(http.Dir("./web"))))
-	r.Post("/generate", HandleFunc(generate(bookbytes.CurrentBook)))
-  r.Post("/info", HandleFunc(info(bookbytes.CurrentBook)))
-	r.Post("/nextpg", HandleFunc(nextpg(bookbytes.CurrentBook)))
-	r.Post("/prevpg", HandleFunc(prevpg(bookbytes.CurrentBook)))
-  r.Post("/chapter", HandleFunc(chapter(bookbytes.CurrentBook)))
-  r.Post("/nextchapter", HandleFunc(nextchapter(bookbytes.CurrentBook)))
-  r.Post("/prevchapter", HandleFunc(prevchapter(bookbytes.CurrentBook)))
-  r.Post("/beginning", HandleFunc(beginning(bookbytes.CurrentBook)))
-  r.Post("/newbook", HandleFunc(newbook(bookbytes.CurrentBook)))
+	r.Post("/generate", HandleFunc(generate(*bookbytes.CurrentBook)))
+  r.Post("/info", HandleFunc(info(*bookbytes.CurrentBook)))
+	r.Post("/nextpg", HandleFunc(nextpg(*bookbytes.CurrentBook)))
+	r.Post("/prevpg", HandleFunc(prevpg(*bookbytes.CurrentBook)))
+  r.Post("/chapter", HandleFunc(chapter(*bookbytes.CurrentBook)))
+  r.Post("/nextchapter", HandleFunc(nextchapter(*bookbytes.CurrentBook)))
+  r.Post("/prevchapter", HandleFunc(prevchapter(*bookbytes.CurrentBook)))
+  r.Post("/beginning", HandleFunc(beginning(*bookbytes.CurrentBook)))
+  r.Post("/newbook", HandleFunc(newbook(*bookbytes.CurrentBook)))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
 		log.Fatal(err)
@@ -77,7 +76,7 @@ func file(filename string) HandlerFunc {
 func generate(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+			Headline: bookbytes.GetParagraph(*bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -93,7 +92,7 @@ func generate(bookbytes.Book) HandlerFunc {
 func info(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetInfo(bookbytes.CurrentBook), // I don't think I should have to use a func?
+			Headline: bookbytes.GetInfo(*bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -109,7 +108,7 @@ func info(bookbytes.Book) HandlerFunc {
 func nextpg(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetNextParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+			Headline: bookbytes.GetNextParagraph(*bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -125,7 +124,7 @@ func nextpg(bookbytes.Book) HandlerFunc {
 func prevpg(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		var resp = Response{
-			Headline: bookbytes.GetPreviousParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+			Headline: bookbytes.GetPreviousParagraph(*bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -205,9 +204,9 @@ func beginning(bookbytes.Book) HandlerFunc {
 func newbook(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
     bookbytes.GetNewBook()
-    fmt.Println(bookbytes.GetTitle(bookbytes.CurrentBook))
+    fmt.Println(bookbytes.GetTitle(*bookbytes.CurrentBook))
 		var resp = Response{
-			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
+			Headline: bookbytes.GetParagraph(*bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {

@@ -17,12 +17,12 @@ type Book struct {
   paragraph int
 }
 
-func NewBook() Book {
+func NewBook() *Book {
   fullhtml := GetContents(GetFile())
   fulltext := StripLicense(fullhtml)
   booktext := SplitText(fullhtml)
   chaprefs := SetChapterReferences(booktext)
-  return Book{
+  return &Book{
     fullhtml: fullhtml,
     fulltext: fulltext,
     title: SetTitle(fullhtml),
@@ -98,7 +98,7 @@ func SetChapter() {
 }
 
 func SetParagraph() int {
-  CurrentBook.paragraph = NewParagraph(CurrentBook)
+  CurrentBook.paragraph = NewParagraph(*CurrentBook)
   return CurrentBook.paragraph 
 }
 
