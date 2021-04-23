@@ -52,6 +52,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - Should consider checking for sufficient content before displaying selected book.
   - If we can't figure out chapter/paragraph issues for all texts,
     - maybe we just display the texts we have working sufficiently for release.
+- I think the CurrentBook global variable in book.go is the new session problem.
 
 ### Ordered Plan
 - [x] Set up server to download full library
