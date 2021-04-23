@@ -38,8 +38,8 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - Also seems to be a slight input lag on mobile?
 - 3/1/3/4/31342/31342-h/313420h.htm returns only "Fin."
   - it is a small collection of poems.
-  - encapsulated by <table> instead of <p>
-- Poe poems are encapsulated in <pre . . .> so they aren't pulled with <p>'s
+  - encapsulated by "table" instead of "p"
+- Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s
 
 ### Thoughts
 - Eventually would like to have accounts to save the reader's place.
