@@ -47,6 +47,11 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - Selector file runs separately when server starts.
   - Hold current possible files that can be served using a different file.
     - May have been taken care of with File variable addition?
+- Some paragraphs are a little daunting.
+  - Maybe we should implement a character limite as well?
+- Should consider checking for sufficient content before displaying selected book.
+  - If we can't figure out chapter/paragraph issues for all texts,
+    - maybe we just display the texts we have working sufficiently for release.
 
 ### Ordered Plan
 - [x] Set up server to download full library
@@ -54,9 +59,10 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - rsync can do this for me
 - [ ] Explore ideas for segmenting chapters and other print section formats
   - Lots of progress made here thanks to PyrO
+    - Needs more refining before release
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
-  - ~~Also should store library files to be accessed repeatedly instead of walking directory every time~~
+  - ~~Should store library files to be accessed repeatedly instead of walking directory every time~~
     - "Files" are now stored in global variable
 - [ ] Add feedback solution
 - [ ] Finalize web interface
