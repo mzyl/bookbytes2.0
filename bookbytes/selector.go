@@ -6,15 +6,32 @@ import (
   "time"
   "bufio"
   "math/rand"
-  "path/filepath"
+  //"path/filepath"
 )
 
-var Files []string
+//var Files []string
 
-func GetFile() (filename string) {
-  var randomfile int
+func GetFile(booklist string) (filename string) {
+  //var randomfile int
   rand.Seed(time.Now().UnixNano())
+
+  file, err := os.Open(booklist)
+  if err != nil {
+    log.Fatal(err)
+  }
+  defer file.Close()
   
+  // TODO: needs to randomly generate from file line count
+  randomfile := rand.Int63n(61240)
+  _, err = file.Seek(randomfile, 0)
+  files := bufio.NewReader(file)
+  filename, err = files.ReadString('\n')
+  filename, err = files.ReadString('\n')
+  filename = filename[:len(filename)-1]
+  println("File: ")
+  println(filename)
+
+/**  
   if Files == nil {
     //root := "./books" // for testing
     root := "../library/htmlmirror"
@@ -29,20 +46,18 @@ func GetFile() (filename string) {
       panic(err)
     }
   }
-  
-  for range Files {
-    randomfile = rand.Intn(len(Files))
+  for range files {
+    randomfile = rand.Intn(len(files))
     println(randomfile)
     if randomfile != 0 {
-      filename = Files[randomfile]
+      filename = files[randomfile]
       break
     }
   }
+  **/
 
-  println(len(Files))
-  println()
-  println("./" + filename)
-  return "./" + filename
+  //println(len(files))
+  return "../library/htmlmirror/" + filename
   //return "../library/htmlmirror/3/1/2/0/31200/31200-h/31200-h.htm"
 }
 
