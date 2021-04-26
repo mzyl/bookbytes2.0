@@ -53,6 +53,8 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
   - If we can't figure out chapter/paragraph issues for all texts,
     - maybe we just display the texts we have working sufficiently for release.
 - I think the CurrentBook global variable in book.go is the new session problem.
+- Maybe store list of files in text for Go to reference instead of rescanning the files on startup.
+  - This has been implemented.
 
 ### Ordered Plan
 - [x] Set up server to download full library
@@ -65,6 +67,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [ ] Reimplement so each connection to site gets a different session
   - ~~Should store library files to be accessed repeatedly instead of walking directory every time~~
     - "Files" are now stored in global variable
+      - This is different now, thanks to ikiris.
 - [ ] Add feedback solution
 - [ ] Finalize web interface
 - [ ] Replicate local server on digitalocean or similar
