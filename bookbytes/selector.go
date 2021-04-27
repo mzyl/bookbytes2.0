@@ -6,13 +6,9 @@ import (
   "time"
   "bufio"
   "math/rand"
-  //"path/filepath"
 )
 
-//var Files []string
-
 func GetFile(booklist string) (filename string) {
-  //var randomfile int
   rand.Seed(time.Now().UnixNano())
 
   file, err := os.Open(booklist)
@@ -28,33 +24,7 @@ func GetFile(booklist string) (filename string) {
   filename, err = files.ReadString('\n')
   filename, err = files.ReadString('\n')
   filename = filename[:len(filename)-1]
-  println("File: ")
-  println(filename)
-
-/**  
-  if Files == nil {
-    //root := "./books" // for testing
-    root := "../library/htmlmirror"
-    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-      if filepath.Ext(path) == ".htm" || filepath.Ext(path) == ".html" {
-        Files = append(Files, path)
-        println(path)
-      }
-      return nil
-    })
-    if err != nil {
-      panic(err)
-    }
-  }
-  for range files {
-    randomfile = rand.Intn(len(files))
-    println(randomfile)
-    if randomfile != 0 {
-      filename = files[randomfile]
-      break
-    }
-  }
-  **/
+  println("File: ", filename)
 
   //println(len(files))
   return "../library/htmlmirror/" + filename
@@ -81,6 +51,7 @@ func NewParagraph(book Book) (index int) {
   var randomparagraph int
   for range text {
     randomparagraph = rand.Intn(len(text))
+    // print number of characters in paragraph
     println(len(text[randomparagraph]))
     if len(text[randomparagraph]) > 400 {
       index = randomparagraph
