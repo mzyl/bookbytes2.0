@@ -39,9 +39,10 @@ var CurrentBook = NewBook()
 
 /*** Setter Functions ***/
 
-func GetNewBook() (book Book){
-  //CurrentBook = NewBook()
-  return NewBook()
+func GetNewBook() (){
+  CurrentBook = NewBook()
+  println("Title: ", CurrentBook.title)
+  println("Author: ", CurrentBook.author)
 }
 
 func SetTitle(booktext []string) string {
@@ -56,7 +57,6 @@ func Get(booktext []string, attr string) (ret string) {
   for _, line := range booktext {
     if strings.Contains(line, attr+":") {
       text := strings.SplitAfter(line, attr+":")
-      println(text)
       ret = strings.TrimSpace(strings.Join(text[1:], " "))
       break;
     }
@@ -74,7 +74,7 @@ func SetChapterReferences(booktext []string) (chaprefs []int) {
     }
   }
   chaprefs = append(chaprefs, len(booktext))
-  println("Chapter Refs: ", chaprefs)
+  println("Chapters found: ", len(chaprefs)-1)
   return
 }
 
@@ -154,7 +154,6 @@ func SplitText(fullhtml []string) (booktext []string) {
 func BookPrinter(book Book) {
   println("Title: ", book.title)
   println("Author: ", book.author)
-  println("Chapter References: ", book.chaprefs)
   //println(book.booktext[book.paragraph])
   //println(book.fulltext)
 }

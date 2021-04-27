@@ -204,7 +204,6 @@ func beginning(bookbytes.Book) HandlerFunc {
 func newbook(bookbytes.Book) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
     bookbytes.GetNewBook()
-    fmt.Println(bookbytes.GetTitle(bookbytes.CurrentBook))
 		var resp = Response{
 			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook), // I don't think I should have to use a func?
 		}
