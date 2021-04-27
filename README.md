@@ -1,24 +1,11 @@
 ## BookBytes 2.0
 #### Short book passages to pique your interest
 Things are coming together.
-Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: https://github.com/cbrgm/clickbaiter/
 
 ### Goals
-- [x] Better data passing through functions
-- [x] New buttons for displaying title and author
-- [x] Build "booktext" out of "fulltext"
-- [x] Maybe begin random selection of paragraphs and/or books
-- [x] Random file selection
-- [x] Select new book from ui
 - [ ] Address some "problems"
-- [x] Better layout - Buttons on the side, maybe
-- [x] Next paragraph button
-- [x] Previous paragraph button
-- [x] Beginning of chapter button
-- [x] Display title/author and the end at beginning and end of book
-  - Maybe only at the end? 
-  - Append "The End" to final chapter
-    - Final chapter ends with *Fin.*
+- [ ] Begin addressing the sessions problem
+  - Maybe try implementing sessions elsewhere, then bring the idea back here
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -29,6 +16,21 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
 - [x] Work with whole book library
 - [ ] Host locally on server
 - [ ] Find font that contains virtually all characters
+
+### Ordered Plan
+- [x] Set up server to download full library
+- [x] Pull html documents out of full library
+  - rsync can do this for me
+- [ ] Explore ideas for segmenting chapters and other print section formats
+  - Lots of progress made here thanks to PyrO
+    - Needs more refining before release
+- [ ] Host locally from server
+- [ ] Reimplement so each connection to site gets a different session
+- [ ] Add feedback solution
+- [ ] Finalize web interface
+- [ ] Replicate local server on digitalocean or similar
+- [ ] Link to domain name
+- [ ] Release and look for feedback
 
 ### Problems
 - Chapters are not all marked the same.....
@@ -54,22 +56,7 @@ Interface is HEAVILY borrowed from the clickbaiter project by cbrgm found here: 
     - maybe we just display the texts we have working sufficiently for release.
 - I think the CurrentBook global variable in book.go is the new session problem.
 - Maybe store list of files in text for Go to reference instead of rescanning the files on startup.
-  - This has been implemented.
+  - This has been implemented with the help of ikiris.
 
-### Ordered Plan
-- [x] Set up server to download full library
-- [x] Pull html documents out of full library
-  - rsync can do this for me
-- [ ] Explore ideas for segmenting chapters and other print section formats
-  - Lots of progress made here thanks to PyrO
-    - Needs more refining before release
-- [ ] Host locally from server
-- [ ] Reimplement so each connection to site gets a different session
-  - ~~Should store library files to be accessed repeatedly instead of walking directory every time~~
-    - "Files" are now stored in global variable
-      - This is different now, thanks to ikiris.
-- [ ] Add feedback solution
-- [ ] Finalize web interface
-- [ ] Replicate local server on digitalocean or similar
-- [ ] Link to domain name
-- [ ] Release and look for feedback
+### Things that could be improved
+- [ ] Chapter selection could use some help
