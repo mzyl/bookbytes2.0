@@ -6,6 +6,9 @@ Things are coming together.
 - [ ] Address some "problems"
 - [ ] Begin addressing the sessions problem
   - Maybe try implementing sessions elsewhere, then bring the idea back here
+- [x] Text field reset on button press
+- [x] Grab and display language in Info
+  - Will be useful for filter option later
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -16,6 +19,7 @@ Things are coming together.
 - [x] Work with whole book library
 - [ ] Host locally on server
 - [ ] Find font that contains virtually all characters
+  - Maybe this doesn't exist like I thought it did
 
 ### Ordered Plan
 - [x] Set up server to download full library
@@ -26,8 +30,8 @@ Things are coming together.
     - Needs more refining before release
 - [ ] Host locally from server
 - [ ] Reimplement so each connection to site gets a different session
-- [ ] Add feedback solution
 - [ ] Finalize web interface
+- [ ] Add feedback solution
 - [ ] Replicate local server on digitalocean or similar
 - [ ] Link to domain name
 - [ ] Release and look for feedback
@@ -44,19 +48,19 @@ Things are coming together.
 - Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s.
 
 ### Thoughts
-- Eventually would like to have accounts to save the reader's place.
-- May want to filter for English texts.
-- Selector file runs separately when server starts.
-  - Hold current possible files that can be served using a different file.
-    - May have been taken care of with File variable addition?
 - Some paragraphs are a little daunting.
   - Maybe we should implement a character limite as well?
 - Should consider checking for sufficient content before displaying selected book.
   - If we can't figure out chapter/paragraph issues for all texts,
     - maybe we just display the texts we have working sufficiently for release.
 - I think the CurrentBook global variable in book.go is the new session problem.
-- Maybe store list of files in text for Go to reference instead of rescanning the files on startup.
+- ~~Maybe store list of files in text for Go to reference instead of rescanning the files on startup.~~
   - This has been implemented with the help of ikiris.
 
 ### Things that could be improved
 - [ ] Chapter selection could use some help
+
+### Future ideas
+- Eventually would like to have accounts to save the reader's place.
+  - Accounts may be able to generate random paragraphs from specific books they have enjoyed in the past.
+- May want to filter for English texts.

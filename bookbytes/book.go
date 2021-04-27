@@ -199,7 +199,6 @@ func GetChapter() string {
   return CurrentBook.chapter
 }
 
-// need to check if at beginning or end of book
 func GetNextChapter() string {
   begin := CurrentBook.chaprefs[CurrentBook.currentchapref+1]
   end := CurrentBook.chaprefs[CurrentBook.currentchapref+2]
