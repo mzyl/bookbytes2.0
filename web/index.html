@@ -108,15 +108,15 @@
             <div class="columns">
                 <div class="column left is-4">
                     <div class="buttons">
-                        <button class="button is-primary is-medium" onclick="generate()">Generate</button>
+                        <button class="button is-primary is-medium" onclick="generate();scrolltotop()">Generate</button>
                         <button class="button is-small" onclick="info();showinfo()">Info</button>
-                        <button class="button is-small" onclick="prevpg()">Previous Paragraph</button>
-                        <button class="button is-small" onclick="nextpg()">Next Paragraph</button>
-                        <button class="button is-small" onclick="chapter()">Whole Chapter</button>
-                        <button class="button is-small" onclick="prevchapter()">Previous Chapter</button>
-                        <button class="button is-small" onclick="nextchapter()">Next Chapter</button>
-                        <button class="button is-small" onclick="beginning()">Take me to the beginning</button>
-                        <button class="button is-primary is-medium" onclick="newbook();hideinfo()">New Book</button>
+                        <button class="button is-small" onclick="prevpg();scrolltotop()">Previous Paragraph</button>
+                        <button class="button is-small" onclick="nextpg();scrolltotop()">Next Paragraph</button>
+                        <button class="button is-small" onclick="chapter();scrolltotop()">Whole Chapter</button>
+                        <button class="button is-small" onclick="prevchapter();scrolltotop()">Previous Chapter</button>
+                        <button class="button is-small" onclick="nextchapter();scrolltotop()">Next Chapter</button>
+                        <button class="button is-small" onclick="beginning();scrolltotop()">Take me to the beginning</button>
+                        <button class="button is-primary is-medium" onclick="newbook();hideinfo();scrolltotop()">New Book</button>
                     <h2 id="cb-info" class="description is-2"></h2>
                     </div>
                 </div>
@@ -268,6 +268,11 @@
         if (elem.style.display === "none") {
           elem.style.display = "block";
         } 
+    }
+
+    function scrolltotop() {
+        var div = document.getElementById("cb-headline")
+        div.scrollTop = 0;
     }
 </script>
 </body>
