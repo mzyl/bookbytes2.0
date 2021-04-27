@@ -10,6 +10,7 @@ type Book struct {
   fulltext string
   title string
   author string
+  language string
   booktext []string
   chaprefs []int
   currentchapref int
@@ -27,6 +28,7 @@ func NewBook() Book {
     fulltext: fulltext,
     title: SetTitle(fullhtml),
     author: SetAuthor(fullhtml),
+    language: SetLanguage(fullhtml),
     booktext: booktext,
     chaprefs: chaprefs,
     currentchapref: 0,
@@ -53,6 +55,10 @@ func SetAuthor(booktext []string) string {
   return Get(booktext, "Author")
 }
 
+func SetLanguage(booktext []string) string {
+  return Get(booktext, "Language")
+}
+
 func Get(booktext []string, attr string) (ret string) {
   for _, line := range booktext {
     if strings.Contains(line, attr+":") {
@@ -66,7 +72,6 @@ func Get(booktext []string, attr string) (ret string) {
 
 func SetChapterReferences(booktext []string) (chaprefs []int) {
   match, _ := regexp.Compile("<h[1-6]")
-  //match, _ := regexp.Compile("<h[0-9 ]+>([a-zA-Z0-9 ]+)</h[0-9 ]+>\n+<h[0-9 ]+>[<>a-zA-Z0-9 ='\"]+page_")
   for i, line := range booktext {
     //if strings.Contains(line, "name=\"chap") {
     if match.MatchString(strings.ToLower(line)) {
@@ -166,8 +171,13 @@ func GetAuthor(book Book) string {
   return book.author
 }
 
+func GetLanguage(book Book) string {
+  return book.language
+}
+
 func GetInfo(book Book) string {
-  return "This passage is from " + "<i>" + GetTitle(book) + "</i>" + " written by " + GetAuthor(book) + "."
+  return "This passage is from " + "<i>" + GetTitle(book) + "</i>" + 
+    " written by " + GetAuthor(book) + " in " + GetLanguage(book) + "."
 }
 
 func GetParagraph(book Book) string {
@@ -188,6 +198,7 @@ func GetChapter() string {
   SetChapter()
   return CurrentBook.chapter
 }
+
 // need to check if at beginning or end of book
 func GetNextChapter() string {
   begin := CurrentBook.chaprefs[CurrentBook.currentchapref+1]
