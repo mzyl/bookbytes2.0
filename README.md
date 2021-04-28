@@ -20,6 +20,7 @@ Things are coming together.
 - [ ] Host locally on server
 - [ ] Find font that contains virtually all characters
   - Maybe this doesn't exist like I thought it did
+- [ ] About page, what else is coming, etc.
 
 ### Ordered Plan
 - [x] Set up server to download full library
