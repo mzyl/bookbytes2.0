@@ -6,6 +6,7 @@ import (
 )
 
 type Book struct {
+  filename string
   fullhtml []string
   fulltext string
   title string
@@ -19,11 +20,13 @@ type Book struct {
 }
 
 func NewBook() Book {
-  fullhtml := GetContents(GetFile("booklist.txt"))
+  filename := GetFile("booklist.txt")
+  fullhtml := GetContents(filename)
   fulltext := StripLicense(fullhtml)
   booktext := SplitText(fullhtml)
   chaprefs := SetChapterReferences(booktext)
   return Book{
+    filename: filename,
     fullhtml: fullhtml,
     fulltext: fulltext,
     title: SetTitle(fullhtml),
@@ -162,6 +165,10 @@ func BookPrinter(book Book) {
   println("Language: ", book.language)
   //println(book.booktext[book.paragraph])
   //println(book.fulltext)
+}
+
+func GetFilename(book Book) string{
+  return book.filename
 }
 
 func GetTitle(book Book) string {

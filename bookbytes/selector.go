@@ -19,15 +19,16 @@ func GetFile(booklist string) (filename string) {
   
   // TODO: needs to randomly generate from file line count
   randomfile := rand.Int63n(61240)
+  println("Random Number:", randomfile)
   _, err = file.Seek(randomfile, 0)
   files := bufio.NewReader(file)
   filename, err = files.ReadString('\n')
   filename, err = files.ReadString('\n')
   filename = filename[:len(filename)-1]
-  println("File: ", filename)
 
   //println(len(files))
-  return "../library/htmlmirror/" + filename
+  println("File: ../library/htmlmirror/" + filename[2:])
+  return "../library/htmlmirror/" + filename[2:]
   //return "../library/htmlmirror/3/1/2/0/31200/31200-h/31200-h.htm"
 }
 

@@ -118,6 +118,7 @@
                         <button class="button is-small" onclick="beginning();scrolltotop()">Take me to the beginning</button>
                         <button class="button is-primary is-medium" onclick="newbook();hideinfo();scrolltotop()">New Book</button>
                     <h2 id="cb-info" class="description is-2"></h2>
+                    <h2 id="cb-filename" class="description is-2"></h2>
                     </div>
                 </div>
                 <div class="column right">
@@ -156,13 +157,16 @@
         })
             .then((resp) => resp.json())
             .then((data) => {
-                document.getElementById("cb-info").innerHTML = data.headline
+                document.getElementById("cb-info").innerHTML = data.info
+                document.getElementById("cb-filename").innerHTML = data.filename
             })
     }
 
     async function nextpg() {
+        console.log(document.getElementById("cb-filename").textcontent) // undefined
         await fetch('/nextpg', {
             method: 'POST',
+            body: document.getElementById("cb-filename").textcontent,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
