@@ -47,6 +47,8 @@ Things are coming together.
   - it is a small collection of poems.
   - encapsulated by "table" instead of "p".
 - Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s.
+- Random books only coming from 40,000's range...
+  - Random number based on list length no longer relevant fro how Seek works.
 
 ### Thoughts
 - Some paragraphs are a little daunting.
