@@ -159,6 +159,7 @@ func SplitText(fullhtml []string) (booktext []string) {
 func BookPrinter(book Book) {
   println("Title: ", book.title)
   println("Author: ", book.author)
+  println("Language: ", book.language)
   //println(book.booktext[book.paragraph])
   //println(book.fulltext)
 }
