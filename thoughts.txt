@@ -1,0 +1,29 @@
+--- What I have ---
+
+var book = current book
+  each client gets this variable
+  when one client changes the variable
+    all clients are effected
+
+
+--- What I need ---
+
+no variable
+  on load 
+    pass text + filename, currentchapref, paragaph
+  on function call
+    pass back filename, currentchapref, paragaph if needed
+      i.e. for moving between chapters an paragraphs
+
+
+--- How an action should look ---
+
+user connects to site
+  user is sent text + filename(string), (maybe) currentchapref(int), paragraph(int)
+user clicks next paragraph button 
+  user sends back useful information
+    i.e. filename, current paragraph index(int)
+  server calls NextParagraph(filename, currentparagraph)
+    server gets booktext of filename
+      server returns booktext[currentparagraph+1] and currentparagraph+1 
+  user receives new text(string) and new paragraph(int)
