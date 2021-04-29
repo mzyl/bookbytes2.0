@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-  bookbytes.BookPrinter(bookbytes.CurrentBook)
+  book := bookbytes.NewBook()
+  bookbytes.BookPrinter(book)
 }
