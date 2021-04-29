@@ -52,8 +52,6 @@ func NewParagraph(book Book) (index int) {
   var randomparagraph int
   for range text {
     randomparagraph = rand.Intn(len(text))
-    // print number of characters in paragraph
-    println(len(text[randomparagraph]))
     if len(text[randomparagraph]) > 400 {
       index = randomparagraph
       break
