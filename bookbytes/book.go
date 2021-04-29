@@ -40,15 +40,29 @@ func NewBook() Book {
   }
 }
 
-var CurrentBook = NewBook()
+func NewBookFromFilename(filename string, paragraph int) Book {
+  fullhtml := GetContents(filename)
+  fulltext := StripLicense(fullhtml)
+  booktext := SplitText(fullhtml)
+  chaprefs := SetChapterReferences(booktext)
+  return Book{
+    filename: filename,
+    fullhtml: fullhtml,
+    fulltext: fulltext,
+    title: SetTitle(fullhtml),
+    author: SetAuthor(fullhtml),
+    language: SetLanguage(fullhtml),
+    booktext: booktext,
+    chaprefs: chaprefs,
+    currentchapref: 0,
+    chapter: "",
+    paragraph: paragraph,
+  }
+}
+
 
 /*** Setter Functions ***/
 
-func GetNewBook() (){
-  CurrentBook = NewBook()
-  println("Title: ", CurrentBook.title)
-  println("Author: ", CurrentBook.author)
-}
 
 func SetTitle(booktext []string) string {
   return Get(booktext, "Title")
@@ -86,30 +100,24 @@ func SetChapterReferences(booktext []string) (chaprefs []int) {
   return
 }
 
-func SetChapter() {
+func SetChapter(filename string, paragraph int) (string, int) {
+  book := NewBookFromFilename(filename, paragraph)
   var begin int
   var end int
   var beginindex int
-  println("Current Paragraph Index: ", CurrentBook.paragraph)
-  for i, ref := range CurrentBook.chaprefs {
-    println(i, ":", ref)
-    if ref > CurrentBook.paragraph {
-      begin = CurrentBook.chaprefs[i-1]
+  for i, ref := range book.chaprefs {
+    if ref > book.paragraph {
+      begin = book.chaprefs[i-1]
       end = ref
       beginindex = i-1
       break;
     }
   }
-  println(begin, ":", end)
-  ret := strings.Join(CurrentBook.booktext[begin:end], " ")
-  CurrentBook.currentchapref = beginindex
-  CurrentBook.chapter = ret 
+ ret := strings.Join(book.booktext[begin:end], " ")
+  book.currentchapref = beginindex
+  return ret, book.currentchapref
 }
 
-func SetParagraph() int {
-  CurrentBook.paragraph = NewParagraph(CurrentBook)
-  return CurrentBook.paragraph 
-}
 
 func StripLicense(fullhtml []string) (bookstring string) {
   // May need to have title and author come out of <pre> in the future
@@ -171,6 +179,21 @@ func GetFilename(book Book) string{
   return book.filename
 }
 
+func Init() (paragraph string, filename string, index int) {
+  book := NewBook()
+  filename = book.filename
+  index = NewParagraph(book)
+  paragraph = book.booktext[index]
+  return
+}
+
+func GetNewParagraph(filename string) (paragraph string, index int) {
+  book := NewBookFromFilename(filename, 0)
+  index = NewParagraph(book)
+  paragraph = book.booktext[index]
+  return
+}
+
 func GetTitle(book Book) string {
   return book.title
 }
@@ -183,58 +206,59 @@ func GetLanguage(book Book) string {
   return book.language
 }
 
-func GetInfo(book Book) string {
+func GetInfo(filename string) string {
+  book := NewBookFromFilename(filename, 0)
   return "This passage is from " + "<i>" + GetTitle(book) + "</i>" + 
     " written by " + GetAuthor(book) + " in " + GetLanguage(book) + "."
 }
 
-func GetParagraph(book Book) string {
-  return book.booktext[SetParagraph()]
+func GetParagraphIndex(book Book) int {
+  return book.paragraph
 }
 
-func GetNextParagraph(book Book) string {
-  CurrentBook.paragraph = CurrentBook.paragraph + 1
-  return book.booktext[CurrentBook.paragraph]
+func GetNextParagraph(filename string, paragraph int) string {
+  book := NewBookFromFilename(filename, paragraph)
+  book.paragraph = paragraph + 1
+  return book.booktext[book.paragraph]
 }
 
-func GetPreviousParagraph(book Book) string {
-  CurrentBook.paragraph = CurrentBook.paragraph - 1
-  return book.booktext[CurrentBook.paragraph]
+func GetPreviousParagraph(filename string, paragraph int) string {
+  book := NewBookFromFilename(filename, paragraph)
+  book.paragraph = paragraph - 1
+  return book.booktext[book.paragraph]
 }
 
-func GetChapter() string {
-  SetChapter()
-  return CurrentBook.chapter
+func GetChapter(filename string, paragraph int) (chapter string, chapterref int) {
+  chapter, chapterref = SetChapter(filename, paragraph)
+  return 
 }
 
-func GetNextChapter() string {
-  begin := CurrentBook.chaprefs[CurrentBook.currentchapref+1]
-  end := CurrentBook.chaprefs[CurrentBook.currentchapref+2]
-  ret := strings.Join(CurrentBook.booktext[begin:end], " ")
-  CurrentBook.currentchapref = CurrentBook.currentchapref+1
-  CurrentBook.chapter = ret 
-  return CurrentBook.chapter
+func GetNextChapter(filename string, index int) (chapter string, chapterref int) {
+  book := NewBookFromFilename(filename, 0)
+  begin := book.chaprefs[index + 1]
+  end := book.chaprefs[index + 2]
+  chapter = strings.Join(book.booktext[begin:end], " ")
+  chapterref = index + 1
+  return
 }
 
-func GetPreviousChapter() string {
-  begin := CurrentBook.chaprefs[CurrentBook.currentchapref-1]
-  end := CurrentBook.chaprefs[CurrentBook.currentchapref]
-  ret := strings.Join(CurrentBook.booktext[begin:end], " ")
-  CurrentBook.currentchapref = CurrentBook.currentchapref-1
-  CurrentBook.chapter = ret 
-  return CurrentBook.chapter
+func GetPreviousChapter(filename string, index int) (chapter string, chapterref int) {
+  book := NewBookFromFilename(filename, 0)
+  begin := book.chaprefs[index - 1]
+  end := book.chaprefs[index]
+  chapter = strings.Join(book.booktext[begin:end], " ")
+  chapterref = index - 1
+  return
 }
 
-func GetFirstChapter() string {
-  begin := CurrentBook.chaprefs[0]
-  end := CurrentBook.chaprefs[1]
-  ret := strings.Join(CurrentBook.booktext[begin:end], " ")
-  CurrentBook.currentchapref = 0
-  CurrentBook.chapter = ret 
-  return CurrentBook.chapter
+func GetFirstChapter(filename string) (chapter string, chapterref int) {
+  book := NewBookFromFilename(filename, 0)
+  begin := book.chaprefs[0]
+  end := book.chaprefs[1]
+  chapter = strings.Join(book.booktext[begin:end], " ")
+  chapterref = 0
+  return
 }
-
-// Need new function to call new paragraph and "print"
 
 /*** Helper Functions ***/
 

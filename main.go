@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+  "strings"
+  "strconv"
 	"net/http"
   "io/ioutil"
 	"math/rand"
@@ -24,6 +26,7 @@ type Response struct {
   Info string `json:"info"`
   Filename string `json:"filename"`
   Paragraph int `json:"paragraph"`
+  Chapter int `json:"chapter"`
 }
 
 
@@ -40,15 +43,15 @@ func main() {
 	r := chi.NewRouter()
 	r.Get("/", HandleFunc(file("./web/index.html")))
 	r.Handle("/web/*", http.StripPrefix("/web", http.FileServer(http.Dir("./web"))))
-	r.Post("/generate", HandleFunc(generate(bookbytes.CurrentBook)))
-  r.Post("/info", HandleFunc(info(bookbytes.CurrentBook)))
-	r.Post("/nextpg", HandleFunc(nextpg(bookbytes.CurrentBook)))
-	r.Post("/prevpg", HandleFunc(prevpg(bookbytes.CurrentBook)))
-  r.Post("/chapter", HandleFunc(chapter(bookbytes.CurrentBook)))
-  r.Post("/nextchapter", HandleFunc(nextchapter(bookbytes.CurrentBook)))
-  r.Post("/prevchapter", HandleFunc(prevchapter(bookbytes.CurrentBook)))
-  r.Post("/beginning", HandleFunc(beginning(bookbytes.CurrentBook)))
-  r.Post("/newbook", HandleFunc(newbook(bookbytes.CurrentBook)))
+	r.Post("/generate", HandleFunc(generate()))
+  r.Post("/info", HandleFunc(info()))
+	r.Post("/nextpg", HandleFunc(nextpg()))
+	r.Post("/prevpg", HandleFunc(prevpg()))
+  r.Post("/chapter", HandleFunc(chapter()))
+  r.Post("/nextchapter", HandleFunc(nextchapter()))
+  r.Post("/prevchapter", HandleFunc(prevchapter()))
+  r.Post("/beginning", HandleFunc(beginning()))
+  r.Post("/newbook", HandleFunc(newbook()))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
 		log.Fatal(err)
@@ -78,11 +81,15 @@ func file(filename string) HandlerFunc {
 	}
 }
 
-func generate(bookbytes.Book) HandlerFunc {
+func generate() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    filename := string(body)
+    println("Filename:", filename)
+    paragraph, index := bookbytes.GetNewParagraph(filename)
 		var resp = Response{
-			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook),
-      Filename: bookbytes.GetFilename(bookbytes.CurrentBook),
+			Headline: paragraph,
+      Paragraph: index,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -95,11 +102,13 @@ func generate(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func info(bookbytes.Book) HandlerFunc {
+func info() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    filename := string(body)
+    println("Filename:", filename)
 		var resp = Response{
-			Info: bookbytes.GetInfo(bookbytes.CurrentBook),
-      Filename: bookbytes.GetFilename(bookbytes.CurrentBook),
+			Info: bookbytes.GetInfo(filename),
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -112,13 +121,17 @@ func info(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func nextpg(bookbytes.Book) HandlerFunc {
+func nextpg() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
     // console.logs undefined which may be why the print is empty
     body, err := ioutil.ReadAll(r.Body)
-    fmt.Println("Body:", string(body))
+    data := strings.Split(string(body), ",")
+    filename := data[0]
+    index, _ := strconv.Atoi(data[1])
+    println("Filename:", filename)
 		var resp = Response{
-			Headline: bookbytes.GetNextParagraph(bookbytes.CurrentBook),
+			Headline: bookbytes.GetNextParagraph(filename, index),
+      Paragraph: index + 1,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -131,10 +144,16 @@ func nextpg(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func prevpg(bookbytes.Book) HandlerFunc {
+func prevpg() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    data := strings.Split(string(body), ",")
+    filename := data[0]
+    index, _ := strconv.Atoi(data[1])
+    println("Filename:", filename)
 		var resp = Response{
-			Headline: bookbytes.GetPreviousParagraph(bookbytes.CurrentBook),
+			Headline: bookbytes.GetPreviousParagraph(filename, index),
+      Paragraph: index - 1,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -147,10 +166,17 @@ func prevpg(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func chapter(bookbytes.Book) HandlerFunc {
+func chapter() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    data := strings.Split(string(body), ",")
+    filename := data[0]
+    index, _ := strconv.Atoi(data[1])
+    println("Filename:", filename)
+    chapter, chapterref := bookbytes.GetChapter(filename, index)
 		var resp = Response{
-			Headline: bookbytes.GetChapter(),
+      Headline: chapter,
+      Chapter: chapterref,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -163,10 +189,17 @@ func chapter(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func nextchapter(bookbytes.Book) HandlerFunc {
+func nextchapter() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    data := strings.Split(string(body), ",")
+    filename := data[0]
+    index, _ := strconv.Atoi(data[1])
+    println("Filename:", filename)
+    chapter, chapterref := bookbytes.GetNextChapter(filename, index)
 		var resp = Response{
-			Headline: bookbytes.GetNextChapter(),
+			Headline: chapter,
+      Chapter: chapterref,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -179,10 +212,17 @@ func nextchapter(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func prevchapter(bookbytes.Book) HandlerFunc {
+func prevchapter() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    data := strings.Split(string(body), ",")
+    filename := data[0]
+    index, _ := strconv.Atoi(data[1])
+    println("Filename:", filename)
+    chapter, chapterref := bookbytes.GetPreviousChapter(filename, index)
 		var resp = Response{
-			Headline: bookbytes.GetPreviousChapter(),
+			Headline: chapter,
+      Chapter: chapterref,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -195,10 +235,15 @@ func prevchapter(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func beginning(bookbytes.Book) HandlerFunc {
+func beginning() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+		body, err := ioutil.ReadAll(r.Body)
+    filename := string(body)
+    println("Filename:", filename)
+    chapter, chapterref := bookbytes.GetFirstChapter(filename)
 		var resp = Response{
-			Headline: bookbytes.GetFirstChapter(),
+			Headline: chapter,
+      Chapter: chapterref,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {
@@ -211,11 +256,13 @@ func beginning(bookbytes.Book) HandlerFunc {
 	}
 }
 
-func newbook(bookbytes.Book) HandlerFunc {
+func newbook() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
-    bookbytes.GetNewBook()
+    paragraph, filename, index := bookbytes.Init()
 		var resp = Response{
-			Headline: bookbytes.GetParagraph(bookbytes.CurrentBook),
+			Headline: paragraph,
+      Filename: filename,
+      Paragraph: index,
 		}
 		b, err := json.Marshal(resp)
 		if err != nil {

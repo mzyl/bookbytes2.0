@@ -101,7 +101,7 @@
     </style>
 </head>
 
-<body onload="javascript:generate()">
+<body onload="javascript:newbook()">
 <section class="container">
     <div class="columns is-multiline">
         <div class="column is-8 is-offset-2 register">
@@ -131,11 +131,16 @@
                 </div>
         </div>
     </div>
+    <input type="hidden" id="book-filename" name="book-filename" value="">
+    <input type="hidden" id="paragraph-index" name="paragraph-index" value=0>
+    <input type="hidden" id="chapter-index" name="chapter-index" value=0>
 </section>
 <script type="text/javascript">
     async function generate() {
+        var bookfilename = document.getElementById("book-filename");
         await fetch('/generate', {
             method: 'POST',
+            body: bookfilename.value,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -144,12 +149,15 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("paragraph-index").value = data.paragraph
             })
     }
 
     async function info() {
+        var bookfilename = document.getElementById("book-filename");
         await fetch('/info', {
             method: 'POST',
+            body: bookfilename.value,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,10 +171,14 @@
     }
 
     async function nextpg() {
-        console.log(document.getElementById("cb-filename").textcontent) // undefined
+        var bookfilename = document.getElementById("book-filename");
+        var paragraph = document.getElementById("paragraph-index");
+        var tosend = [bookfilename.value, paragraph.value]
+        console.log(bookfilename.value)
+        console.log(paragraph.value)
         await fetch('/nextpg', {
             method: 'POST',
-            body: document.getElementById("cb-filename").textcontent,
+            body: tosend,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -175,12 +187,19 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("paragraph-index").value = data.paragraph
             })
     }
 
     async function prevpg() {
+        var bookfilename = document.getElementById("book-filename");
+        var paragraph = document.getElementById("paragraph-index");
+        var tosend = [bookfilename.value, paragraph.value]
+        console.log(bookfilename.value)
+        console.log(paragraph.value)
         await fetch('/prevpg', {
             method: 'POST',
+            body: tosend,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -189,12 +208,19 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("paragraph-index").value = data.paragraph
             })
     }
 
     async function chapter() {
+        var bookfilename = document.getElementById("book-filename");
+        var paragraph = document.getElementById("paragraph-index");
+        var tosend = [bookfilename.value, paragraph.value]
+        console.log(bookfilename.value)
+        console.log(paragraph.value)
         await fetch('/chapter', {
             method: 'POST',
+            body: tosend,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -203,12 +229,19 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("chapter-index").value = data.chapter
             })
     }
 
     async function nextchapter() {
+        var bookfilename = document.getElementById("book-filename");
+        var chapter = document.getElementById("chapter-index");
+        var tosend = [bookfilename.value, chapter.value]
+        console.log(bookfilename.value)
+        console.log(chapter.value)
         await fetch('/nextchapter', {
             method: 'POST',
+            body: tosend,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,12 +250,19 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("chapter-index").value = data.chapter
             })
     }
 
     async function prevchapter() {
+        var bookfilename = document.getElementById("book-filename");
+        var chapter = document.getElementById("chapter-index");
+        var tosend = [bookfilename.value, chapter.value]
+        console.log(bookfilename.value)
+        console.log(chapter.value)
         await fetch('/prevchapter', {
             method: 'POST',
+            body: tosend,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -231,12 +271,16 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("chapter-index").value = data.chapter
             })
     }
 
     async function beginning() {
+        var bookfilename = document.getElementById("book-filename");
+        console.log(bookfilename.value)
         await fetch('/beginning', {
             method: 'POST',
+            body: bookfilename.value,
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
@@ -245,6 +289,7 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("chapter-index").value = data.chapter
             })
     }
 
@@ -259,6 +304,8 @@
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("cb-headline").innerHTML = data.headline
+                document.getElementById("book-filename").value = data.filename
+                document.getElementById("paragraph-index").value = data.paragraph
             })
     }
 
