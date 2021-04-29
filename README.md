@@ -9,6 +9,7 @@ Things are coming together.
 - [x] Text field reset on button press
 - [x] Grab and display language in Info
   - Will be useful for filter option later
+- [ ] Clean up/Refactor functions
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -30,7 +31,7 @@ Things are coming together.
   - Lots of progress made here thanks to PyrO
     - Needs more refining before release
 - [ ] Host locally from server
-- [ ] Reimplement so each connection to site gets a different session
+- [x] Reimplement so each connection to site gets a different session
 - [ ] Finalize web interface
 - [ ] Add feedback solution
 - [ ] Replicate local server on digitalocean or similar
