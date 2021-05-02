@@ -1,15 +1,35 @@
 package bookbytes
 
 import (
-	"bufio"
-	"log"
-	"math/rand"
 	"os"
+	"log"
 	"time"
+	"bufio"
+    "strconv"
+	"math/rand"
 )
 
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
+
+    // number of bytes in booklist.txt
+    bytes, err := os.Open("bytecount.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer bytes.Close()
+
+    // TODO: Consider a better solution for getting a number out of a file.
+    var line []string
+    buffersize := bufio.NewScanner(bytes)
+    for buffersize.Scan() {
+        line = append(line, buffersize.Text())
+    }
+
+    num, _ := strconv.ParseInt(line[0], 10, 64)
+    println("Number in file:", num)
+	randombyte := rand.Int63n(num)
+	println("Random Number:", randombyte)
 
 	file, err := os.Open(booklist)
 	if err != nil {
@@ -17,13 +37,7 @@ func GetFile(booklist string) (filename string) {
 	}
 	defer file.Close()
 
-	// TODO: needs to randomly generate from file line count
-    // try:
-    //files := bufio.NewReader(file)
-    //randompoint := rand.Int63n(files.Size())
-	randomfile := rand.Int63n(61240)
-	println("Random Number:", randomfile)
-	_, err = file.Seek(randomfile, 0)
+	_, err = file.Seek(randombyte, 0)
 	files := bufio.NewReader(file)
 	filename, err = files.ReadString('\n')
 	filename, err = files.ReadString('\n')
