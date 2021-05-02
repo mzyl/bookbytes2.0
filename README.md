@@ -4,7 +4,7 @@ Things are coming together.
 
 ### Goals
 - [ ] Address some "problems"
-- [ ] Begin addressing the sessions problem
+- [x] Begin addressing the sessions problem
   - Maybe try implementing sessions elsewhere, then bring the idea back here
 - [x] Text field reset on button press
 - [x] Grab and display language in Info
@@ -48,8 +48,6 @@ Things are coming together.
   - it is a small collection of poems.
   - encapsulated by "table" instead of "p".
 - Poe poems are encapsulated in "pre . . ." so they aren't pulled with "p"'s.
-- Random books only coming from 40,000's range...
-  - Random number based on list length no longer relevant fro how Seek works.
 
 ### Thoughts
 - Some paragraphs are a little daunting.
@@ -57,7 +55,6 @@ Things are coming together.
 - Should consider checking for sufficient content before displaying selected book.
   - If we can't figure out chapter/paragraph issues for all texts,
     - maybe we just display the texts we have working sufficiently for release.
-- I think the CurrentBook global variable in book.go is the new session problem.
 - ~~Maybe store list of files in text for Go to reference instead of rescanning the files on startup.~~
   - This has been implemented with the help of ikiris.
 
