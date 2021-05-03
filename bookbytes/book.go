@@ -8,7 +8,7 @@ import (
 type Book struct {
 	filename       string
 	fullhtml       []string
-	fulltext       string
+	fulltext       []string
 	title          string
 	author         string
 	language       string
@@ -19,11 +19,12 @@ type Book struct {
 	paragraph      int
 }
 
+// TODO: Find solution to eliminate one of these functions.
 func NewBook() Book {
 	filename := GetFile("booklist.txt")
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
-	booktext := SplitText(fullhtml)
+	booktext := SplitText(fulltext)
 	chaprefs := SetChapterReferences(booktext)
 	return Book{
 		filename:       filename,
@@ -43,7 +44,7 @@ func NewBook() Book {
 func NewBookFromFilename(filename string, paragraph int) Book {
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
-	booktext := SplitText(fullhtml)
+	booktext := SplitText(fulltext)
 	chaprefs := SetChapterReferences(booktext)
 	return Book{
 		filename:       filename,
@@ -115,7 +116,7 @@ func SetChapter(filename string, paragraph int) (string, int) {
 	book.currentchapref = beginindex
 	return ret, book.currentchapref
 }
-
+/*
 func StripLicense(fullhtml []string) (bookstring string) {
 	// May need to have title and author come out of <pre> in the future
 	var booktext []string
@@ -141,10 +142,32 @@ func StripLicense(fullhtml []string) (bookstring string) {
 	bookstring = strings.Join(booktext, " ")
 	return
 }
+*/
+func StripLicense(fullhtml []string) []string {
+	var booktext []string
+	begin := 0
+	end := 0
+    matchbegin, _ := regexp.Compile(`\*\*\*([\S\s][START][A-Z',0-9 ]+)\*\*\*`)
+    matchend, _ := regexp.Compile(`\*\*\*([\S\s][END][A-Z',0-9 ]+)\*\*\*`)
+	for i, line := range fullhtml {
+        if matchbegin.MatchString(line) {
+            println("Found Start")
+			begin = i + 1
+        } else if matchend.MatchString(line) {
+            println("Found End")
+			end = i - 1
+		}
+	}
+    for _, line := range fullhtml[begin:end] {
+        booktext = append(booktext, line)
+    }
+	return booktext
+}
 
 func SplitText(fullhtml []string) (booktext []string) {
 	begin := 0
 	end := 0
+    // try regexp for different paragraph tags as well? p, span, etc.
 	match, _ := regexp.Compile("<h[1-6]")
 	for i, line := range fullhtml {
 		if strings.Contains(strings.ToLower(line), "<p") {
