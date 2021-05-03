@@ -65,3 +65,14 @@ Things are coming together.
 - Eventually would like to have accounts to save the reader's place.
   - Accounts may be able to generate random paragraphs from specific books they have enjoyed in the past.
 - May want to filter for English texts.
+
+### Issues found with text parsing
+- [ ] Section wrapped in pre or span, not p.
+- [ ] Licensing information wrapped in p and span, not plain text.
+- [ ] No START or END, no text is appended in StripLiecense().
+    - StripLicense stores text in fulltext which is used for booktext.
+        - Meaning there is no text in booktext.
+- [ ] No spaces between \*\*\* and Start/End.
+    - Also "Start/End of THE", not THIS.
+- [ ] 27210 splits lines on "Start"
+    - Do we want to handle new lines or just remove the end \*\*\*?
