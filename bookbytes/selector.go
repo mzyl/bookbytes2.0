@@ -43,10 +43,9 @@ func GetFile(booklist string) (filename string) {
 	filename, err = files.ReadString('\n')
 	filename = filename[:len(filename)-1]
 
-	//println(len(files))
 	println("File: ../library/htmlmirror/" + filename[2:])
 	return "../library/htmlmirror/" + filename[2:]
-	//return "../library/htmlmirror/3/1/2/0/31200/31200-h/31200-h.htm"
+    //return "../library/htmlmirror/3/2/9/5/32956/32956-h/32956-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
