@@ -68,11 +68,15 @@ Things are coming together.
 
 ### Issues found with text parsing
 - [ ] Section wrapped in pre or span, not p.
-- [ ] Licensing information wrapped in p and span, not plain text.
-- [ ] No START or END, no text is appended in StripLiecense().
+- [x] Licensing information wrapped in p and span, not plain text.
+- [x] No START or END, no text is appended in StripLiecense().
     - StripLicense stores text in fulltext which is used for booktext.
         - Meaning there is no text in booktext.
-- [ ] No spaces between \*\*\* and Start/End.
+- [x] No spaces between \*\*\* and Start/End.
     - Also "Start/End of THE", not THIS.
-- [ ] 27210 splits lines on "Start"
+- [x] 27210 splits lines on "Start"
     - Do we want to handle new lines or just remove the end \*\*\*?
+- [ ] Some html files just hold space for mp3 files and not books
+    - Maybe check for things like this before serving the book?
+    - These files may not have a Start and End like the others.
+- [ ] 16446 is a set of poems, no p tags anywhere
