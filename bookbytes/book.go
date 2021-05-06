@@ -145,22 +145,32 @@ func StripLicense(fullhtml []string) (bookstring string) {
 */
 func StripLicense(fullhtml []string) []string {
 	var booktext []string
-	begin := 0
-	end := 0
-    matchbegin, _ := regexp.Compile(`\*\*\*([\S\s][START][A-Z',0-9 ]+)\*\*\*`)
-    matchend, _ := regexp.Compile(`\*\*\*([\S\s][END][A-Z',0-9 ]+)\*\*\*`)
+	begin := -1
+	end := -1
+    match, _ := regexp.
+        Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
 	for i, line := range fullhtml {
-        if matchbegin.MatchString(line) {
-            println("Found Start")
-			begin = i + 1
-        } else if matchend.MatchString(line) {
-            println("Found End")
-			end = i - 1
-		}
+        if match.MatchString(line) {
+            if begin == -1 {
+                println("Found Start")
+                begin = i + 1
+            } else {
+                println("Found End")
+                end = i - 1
+                break
+            }
+        }
+        end = i
 	}
+
+    if begin == -1 {
+        begin = 0
+    }
+
     for _, line := range fullhtml[begin:end] {
         booktext = append(booktext, line)
     }
+
 	return booktext
 }
 
