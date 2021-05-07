@@ -116,39 +116,13 @@ func SetChapter(filename string, paragraph int) (string, int) {
 	book.currentchapref = beginindex
 	return ret, book.currentchapref
 }
-/*
-func StripLicense(fullhtml []string) (bookstring string) {
-	// May need to have title and author come out of <pre> in the future
-	var booktext []string
-	begin := 0
-	mid := 0
-	end := 0
-	for i, line := range fullhtml {
-		switch line {
-		case "<pre>":
-			begin = i
-			if end < begin {
-				booktext = append(booktext, strings.
-					Join(fullhtml[mid:begin], " "))
-			}
-		case "</pre>":
-			end = i
-			if mid == 0 {
-				mid = end + 1
-			}
-		}
-	}
-	booktext = append(booktext, strings.Join(fullhtml[end+1:], " "))
-	bookstring = strings.Join(booktext, " ")
-	return
-}
-*/
+
 func StripLicense(fullhtml []string) []string {
 	var booktext []string
 	begin := -1
 	end := -1
-    match, _ := regexp.
-        Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
+    match, _ := regexp.Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
+
 	for i, line := range fullhtml {
         if match.MatchString(line) {
             if begin == -1 {
