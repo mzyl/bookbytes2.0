@@ -45,7 +45,7 @@ func GetFile(booklist string) (filename string) {
 
 	println("File: ../library/htmlmirror/" + filename[2:])
 	return "../library/htmlmirror/" + filename[2:]
-    //return "../library/htmlmirror/2/7/2/1/27210/27210-h/27210-h.htm"
+    //return "../library/htmlmirror/2/2/7/7/22772/22772-h/22772-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
