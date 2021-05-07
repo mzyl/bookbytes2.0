@@ -152,17 +152,20 @@ func SplitText(fullhtml []string) (booktext []string) {
 	begin := 0
 	end := 0
     // try regexp for different paragraph tags as well? p, span, etc.
-	match, _ := regexp.Compile("<h[1-6]")
+    paragraphbegin, _ := regexp.Compile(`<((?:p|div)[\w\W]+)`)
+    paragraphend, _ := regexp.Compile(`</((?:p|div))>`)
+	chapter, _ := regexp.Compile(`<h[1-6]`)
+
 	for i, line := range fullhtml {
-		if strings.Contains(strings.ToLower(line), "<p") {
+		if paragraphbegin.MatchString(strings.ToLower(line)) {
 			begin = i
-		} else if strings.Contains(strings.ToLower(line), "</p>") {
+		} 
+        if paragraphend.MatchString(strings.ToLower(line)) {
 			end = i + 1
 			booktext = append(booktext, strings.
 				Join(fullhtml[begin:end], " "))
-			//} else if strings.Contains(line, "=\"chap") {
-			//} else if strings.Contains(line, "<h2>") {
-		} else if match.MatchString(strings.ToLower(line)) {
+		} 
+        if chapter.MatchString(strings.ToLower(line)) {
 			booktext = append(booktext, line)
 			booktext = append(booktext, fullhtml[i+1])
 		}
