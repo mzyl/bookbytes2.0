@@ -80,3 +80,5 @@ Things are coming together.
     - Maybe check for things like this before serving the book?
     - These files may not have a Start and End like the others.
 - [ ] 16446 is a set of poems, no p tags anywhere
+- [ ] ../library/htmlmirror/5/6/6/5669/old/2004-05-conrg10h.htm
+    - No ending p tags
