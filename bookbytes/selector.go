@@ -1,6 +1,7 @@
 package bookbytes
 
 import (
+    "fmt"
 	"os"
 	"log"
 	"time"
@@ -44,7 +45,8 @@ func GetFile(booklist string) (filename string) {
 	filename = filename[:len(filename)-1]
 
 	println("File: ../library/htmlmirror/" + filename[2:])
-	return "../library/htmlmirror/" + filename[2:]
+	//return "../library/htmlmirror/" + filename[2:]
+    return "books/11-h.htm"
     //return "../library/htmlmirror/2/2/7/7/22772/22772-h/22772-h.htm"
 }
 
@@ -59,6 +61,8 @@ func GetContents(filename string) (text []string) {
 	for scanner.Scan() {
 		text = append(text, scanner.Text())
 	}
+    fmt.Println(text)
+    fmt.Println(len(text))
 	return
 }
 
