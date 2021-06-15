@@ -117,6 +117,7 @@ func SetChapter(filename string, paragraph int) (string, int) {
 	return ret, book.currentchapref
 }
 
+// I think regexp is fine to use here.
 func StripLicense(fullhtml []string) []string {
 	var booktext []string
 	begin := -1
