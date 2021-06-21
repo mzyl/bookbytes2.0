@@ -1,8 +1,16 @@
 package bookbytes
 
 import (
+    "fmt" // Remove later
+    "io"
+    "log"
+    //"errors"
+    "bytes"
+
 	"regexp"
 	"strings"
+
+    "golang.org/x/net/html"
 )
 
 type Book struct {
@@ -24,7 +32,7 @@ func NewBook() Book {
 	filename := GetFile("booklist.txt")
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
-	booktext := SplitText(fulltext)
+	booktext := SplitTextNode(fulltext)
 	chaprefs := SetChapterReferences(booktext)
 	return Book{
 		filename:       filename,
@@ -44,7 +52,7 @@ func NewBook() Book {
 func NewBookFromFilename(filename string, paragraph int) Book {
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
-	booktext := SplitText(fulltext)
+	booktext := SplitTextNode(fulltext)
 	chaprefs := SetChapterReferences(booktext)
 	return Book{
 		filename:       filename,
@@ -86,6 +94,7 @@ func Get(booktext []string, attr string) (ret string) {
 	return
 }
 
+// Maybe replace the regexp here?
 func SetChapterReferences(booktext []string) (chaprefs []int) {
 	match, _ := regexp.Compile("<h[1-6]")
 	for i, line := range booktext {
@@ -149,6 +158,7 @@ func StripLicense(fullhtml []string) []string {
 	return booktext
 }
 
+// This is no longer in use. Using html.Node instead.
 func SplitText(fullhtml []string) (booktext []string) {
 	begin := 0
 	end := 0
@@ -175,6 +185,104 @@ func SplitText(fullhtml []string) (booktext []string) {
 	return
 }
 
+func SplitTextNode(fullhtml []string) (booktext []string) {                                 
+    text := strings.Join(fullhtml, " ")
+    doc, _ := html.Parse(strings.NewReader(text))
+
+    var body *html.Node
+    var crawler func(*html.Node)
+
+    textTags := []string {
+        "p", "h1", "h2", "h3", "h4", "h5", "h6",
+    }
+
+    tag := ""
+    enter := false
+
+    crawler = func(node *html.Node) {
+        tag = node.Data
+        for _, t := range textTags {
+            if tag == t {
+                enter = true
+                break
+            }
+        }
+        if node.Type == html.ElementNode && enter {
+           body = node
+           booktext = append(booktext, renderNode(body))
+           //fmt.Println(renderNode(body))
+           enter = false
+           return
+        }
+        for child := node.FirstChild; child != nil; child = child.NextSibling {
+          crawler(child)
+        }
+    }
+    crawler(doc)
+    return
+}
+
+func renderNode(n *html.Node) string {
+    var buf bytes.Buffer
+    w := io.Writer(&buf)
+    html.Render(w, n)
+    return buf.String()
+}
+
+// No longer using Token because it would split lines with new tags, e.g. <i>
+func SplitTextToken(fullhtml []string) {
+    text := strings.Join(fullhtml, " ")
+    reader := strings.NewReader(text)
+    tokenizer := html.NewTokenizer(reader)
+
+    textTags := []string {
+        "p", "h1", "h2", "h3", "h4", "h5", "h6",
+    }
+
+    tag := ""
+    enter := false
+    
+    for {
+        tt := tokenizer.Next()
+        t := tokenizer.Token()
+
+        err := tokenizer.Err()
+        if err == io.EOF {
+            break
+        }
+
+        switch tt {
+        case html.ErrorToken:
+            log.Fatal(err)
+        case html.StartTagToken, html.SelfClosingTagToken:
+            if enter {
+                break
+            }
+            tag = t.Data
+
+            for _, ttt := range textTags {
+                if tag == ttt {
+                    enter = true
+                    break
+                }
+            }
+        case html.EndTagToken:
+            // if EndTagToken != tag: break
+            if t.Data != tag {
+                break
+            }
+            enter = false
+        case html.TextToken:
+            if enter {
+                data := strings.TrimSpace(t.Data)
+                if len(data) > 0 {
+                    fmt.Println(data)
+                }
+            }
+        }
+    }
+}
+
 /*** Getter Functions ***/
 
 func BookPrinter(book Book) {
@@ -182,7 +290,9 @@ func BookPrinter(book Book) {
 	println("Author: ", book.author)
 	println("Language: ", book.language)
 	//println(book.booktext[book.paragraph])
-	//println(book.fulltext)
+	//fmt.Println(book.fulltext)
+    //SplitTextToken(book.fulltext)
+    SplitTextNode(book.fulltext)
 }
 
 func GetFilename(book Book) string {

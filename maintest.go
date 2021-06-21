@@ -7,4 +7,5 @@ import (
 func main() {
 	book := bookbytes.NewBook()
 	bookbytes.BookPrinter(book)
+    //bookbytes.SplitTextToken(book.fullhtml)
 }
