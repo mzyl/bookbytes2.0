@@ -6,13 +6,12 @@ import (
     "log"
 	"time"
 	"bufio"
-//    "strconv"
+    "strconv"
 	"math/rand"
 )
 
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
-/*
     // number of bytes in booklist.txt
     bytes, err := os.Open("bytecount.txt")
     if err != nil {
@@ -45,10 +44,9 @@ func GetFile(booklist string) (filename string) {
 	filename = filename[:len(filename)-1]
 
 	println("File: ../library/htmlmirror/" + filename[2:])
-*/
 	//return "../library/htmlmirror/" + filename[2:]
     return "docs/11-h.htm"
-    //return "../library/htmlmirror/2/2/7/7/22772/22772-h/22772-h.htm"
+    //return "../library/htmlmirror/6/3/7/7/63772/63772-h/63772-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
