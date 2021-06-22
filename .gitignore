@@ -17,6 +17,6 @@
 .DS_Store
 
 # Ignore book list
-booklist.txt
-bytecount.txt
+#booklist.txt
+#bytecount.txt
 /docs
