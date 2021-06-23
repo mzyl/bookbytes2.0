@@ -1,12 +1,8 @@
 package bookbytes
 
 import (
-    "fmt" // Remove later
     "io"
-    "log"
-    //"errors"
     "bytes"
-
 	"regexp"
 	"strings"
 
