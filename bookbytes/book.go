@@ -1,12 +1,12 @@
 package bookbytes
 
 import (
-    "io"
-    "bytes"
+	"bytes"
+	"io"
 	"regexp"
 	"strings"
 
-    "golang.org/x/net/html"
+	"golang.org/x/net/html"
 )
 
 type Book struct {
@@ -106,78 +106,77 @@ func StripLicense(fullhtml []string) []string {
 	var booktext []string
 	begin := -1
 	end := -1
-    match, _ := regexp.Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
+	match, _ := regexp.Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
 
 	for i, line := range fullhtml {
-        if match.MatchString(line) {
-            if begin == -1 {
-                println("Found Start")
-                begin = i + 1
-            } else {
-                println("Found End")
-                end = i - 1
-                break
-            }
-        }
-        end = i
+		if match.MatchString(line) {
+			if begin == -1 {
+				println("Found Start")
+				begin = i + 1
+			} else {
+				println("Found End")
+				end = i - 1
+				break
+			}
+		}
+		end = i
 	}
-    if begin == -1 {
-        begin = 0
-    }
-    for _, line := range fullhtml[begin:end] {
-        booktext = append(booktext, line)
-    }
+	if begin == -1 {
+		begin = 0
+	}
+	for _, line := range fullhtml[begin:end] {
+		booktext = append(booktext, line)
+	}
 	return booktext
 }
 
-func SplitText(fullhtml []string) []string {                                 
-    var booktext []string
-    text := strings.Join(fullhtml, " ")
-    doc, _ := html.Parse(strings.NewReader(text))
+func SplitText(fullhtml []string) []string {
+	var booktext []string
+	text := strings.Join(fullhtml, " ")
+	doc, _ := html.Parse(strings.NewReader(text))
 
-    var body *html.Node
-    var crawler func(*html.Node)
+	var body *html.Node
+	var crawler func(*html.Node)
 
-    textTags := []string {
-        "h1", "h2", "h3", "h4", "h5", "h6",
-        "p",
-    }
+	textTags := []string{
+		"h1", "h2", "h3", "h4", "h5", "h6",
+		"p",
+	}
 
-    tag := ""
-    enter := false
+	tag := ""
+	enter := false
 
-    crawler = func(node *html.Node) {
-        tag = node.Data
-        for _, t := range textTags {
-            if tag == t {
-                enter = true
-                break
-            }
-        }
-        if node.Type == html.ElementNode && enter {
-           body = node
-           booktext = append(booktext, renderNode(body))
-           //fmt.Println(renderNode(body))
-           enter = false
-           return
-        }
-        for child := node.FirstChild; child != nil; child = child.NextSibling {
-          crawler(child)
-        }
-    }
-    crawler(doc)
+	crawler = func(node *html.Node) {
+		tag = node.Data
+		for _, t := range textTags {
+			if tag == t {
+				enter = true
+				break
+			}
+		}
+		if node.Type == html.ElementNode && enter {
+			body = node
+			booktext = append(booktext, renderNode(body))
+			//fmt.Println(renderNode(body))
+			enter = false
+			return
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			crawler(child)
+		}
+	}
+	crawler(doc)
 	booktext = append(booktext, "<h5><i>Fin.</i></h5>")
-    return booktext
+	return booktext
 }
 
 // probably move this to helper functions
 func renderNode(n *html.Node) string {
-    var buf bytes.Buffer
-    w := io.Writer(&buf)
-    html.Render(w, n)
-    return buf.String()
+	var buf bytes.Buffer
+	w := io.Writer(&buf)
+	html.Render(w, n)
+	return buf.String()
 }
-
 
 /*** Getter Functions ***/
 
@@ -191,7 +190,7 @@ func BookPrinter(book Book) {
 
 func Init() (string, string, int) {
 	filename := GetFile("booklist.txt")
-    book := GenerateBook(filename, 0)
+	book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
 	return paragraph, filename, index

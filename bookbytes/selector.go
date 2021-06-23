@@ -1,33 +1,33 @@
 package bookbytes
 
 import (
-    "fmt"
-	"os"
-    "log"
-	"time"
 	"bufio"
-    "strconv"
+	"fmt"
+	"log"
 	"math/rand"
+	"os"
+	"strconv"
+	"time"
 )
 
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
-    // number of bytes in booklist.txt
-    bytes, err := os.Open("bytecount.txt")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer bytes.Close()
+	// number of bytes in booklist.txt
+	bytes, err := os.Open("bytecount.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer bytes.Close()
 
-    // TODO: Consider a better solution for getting a number out of a file.
-    var line []string
-    buffersize := bufio.NewScanner(bytes)
-    for buffersize.Scan() {
-        line = append(line, buffersize.Text())
-    }
+	// TODO: Consider a better solution for getting a number out of a file.
+	var line []string
+	buffersize := bufio.NewScanner(bytes)
+	for buffersize.Scan() {
+		line = append(line, buffersize.Text())
+	}
 
-    num, _ := strconv.ParseInt(line[0], 10, 64)
-    println("Number in file:", num)
+	num, _ := strconv.ParseInt(line[0], 10, 64)
+	println("Number in file:", num)
 	randombyte := rand.Int63n(num)
 	println("Random Number:", randombyte)
 
@@ -45,8 +45,8 @@ func GetFile(booklist string) (filename string) {
 
 	println("File: ../library/htmlmirror/" + filename[2:])
 	return "../library/htmlmirror/" + filename[2:]
-    //return "docs/11-h.htm"
-    //return "../library/htmlmirror/6/3/7/7/63772/63772-h/63772-h.htm"
+	//return "docs/11-h.htm"
+	//return "../library/htmlmirror/6/3/7/7/63772/63772-h/63772-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
@@ -60,8 +60,8 @@ func GetContents(filename string) (text []string) {
 	for scanner.Scan() {
 		text = append(text, scanner.Text())
 	}
-    //fmt.Println(text)
-    fmt.Println(len(text))
+	//fmt.Println(text)
+	fmt.Println(len(text))
 	return
 }
 

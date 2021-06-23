@@ -40,8 +40,8 @@ func main() {
 
 	r := chi.NewRouter()
 	r.Get("/", HandleFunc(file("./web/index.html")))
-	r.Handle("/web/*", http.StripPrefix("/web", 
-        http.FileServer(http.Dir("./web"))))
+	r.Handle("/web/*", http.StripPrefix("/web",
+		http.FileServer(http.Dir("./web"))))
 	r.Post("/generate", HandleFunc(generate()))
 	r.Post("/info", HandleFunc(info()))
 	r.Post("/nextpg", HandleFunc(nextpg()))
