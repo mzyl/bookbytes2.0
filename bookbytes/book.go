@@ -85,9 +85,7 @@ func SetChapterReferences(booktext []string) (chaprefs []int) {
 
 func SetChapter(filename string, paragraph int) (string, int) {
 	book := GenerateBook(filename, paragraph)
-	var begin int
-	var end int
-	var beginindex int
+	var begin, end, beginindex int
 	for i, ref := range book.chaprefs {
 		if ref > book.paragraph {
 			begin = book.chaprefs[i-1]
