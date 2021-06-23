@@ -26,7 +26,7 @@ type Book struct {
 	chapter        string
 	paragraph      int
 }
-
+/*
 // TODO: Find solution to eliminate one of these functions.
 func NewBook() Book {
 	filename := GetFile("booklist.txt")
@@ -48,7 +48,7 @@ func NewBook() Book {
 		paragraph:      0,
 	}
 }
-
+*/
 func NewBookFromFilename(filename string, paragraph int) Book {
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
@@ -83,6 +83,7 @@ func SetLanguage(booktext []string) string {
 	return Get(booktext, "Language")
 }
 
+// probably move this to helper functions
 func Get(booktext []string, attr string) (ret string) {
 	for _, line := range booktext {
 		if strings.Contains(line, attr+":") {
@@ -146,15 +147,12 @@ func StripLicense(fullhtml []string) []string {
         }
         end = i
 	}
-
     if begin == -1 {
         begin = 0
     }
-
     for _, line := range fullhtml[begin:end] {
         booktext = append(booktext, line)
     }
-
 	return booktext
 }
 
@@ -185,7 +183,8 @@ func SplitText(fullhtml []string) (booktext []string) {
 	return
 }
 
-func SplitTextNode(fullhtml []string) (booktext []string) {                                 
+func SplitTextNode(fullhtml []string) []string {                                 
+    var booktext []string
     text := strings.Join(fullhtml, " ")
     doc, _ := html.Parse(strings.NewReader(text))
 
@@ -220,9 +219,11 @@ func SplitTextNode(fullhtml []string) (booktext []string) {
         }
     }
     crawler(doc)
-    return
+	booktext = append(booktext, "<h5><i>Fin.</i></h5>")
+    return booktext
 }
 
+// probably move this to helper functions
 func renderNode(n *html.Node) string {
     var buf bytes.Buffer
     w := io.Writer(&buf)
@@ -296,16 +297,23 @@ func BookPrinter(book Book) {
     SplitTextNode(book.fulltext)
 }
 
-func GetFilename(book Book) string {
-	return book.filename
-}
-
 func Init() (string, string, int) {
-	book := NewBook()
-	filename := book.filename
+    // get new filename
+    // set book to newbookfromfilename
+    // remove the need for newbookfromfilename
+    // rename newbookfromfilename to newbook
+	filename := GetFile("booklist.txt")
+    book := NewBookFromFilename(filename, 0)
+
+	//book := NewBook()
+	//filename := book.filename
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
 	return paragraph, filename, index
+}
+
+func GetFilename(book Book) string {
+	return book.filename
 }
 
 func GetNewParagraph(filename string) (string, int) {
