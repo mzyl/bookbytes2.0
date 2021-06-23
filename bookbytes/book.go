@@ -30,7 +30,7 @@ type Book struct {
 func GenerateBook(filename string, paragraph int) Book {
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
-	booktext := SplitTextNode(fulltext)
+	booktext := SplitText(fulltext)
 	chaprefs := SetChapterReferences(booktext)
 	return Book{
 		filename:       filename,
@@ -134,34 +134,7 @@ func StripLicense(fullhtml []string) []string {
 	return booktext
 }
 
-// This is no longer in use. Using html.Node instead.
-func SplitText(fullhtml []string) (booktext []string) {
-	begin := 0
-	end := 0
-    // try regexp for different paragraph tags as well? p, span, etc.
-    paragraphbegin, _ := regexp.Compile(`<((?:p|div)[\w\W]+)`)
-    paragraphend, _ := regexp.Compile(`</((?:p|div))>`)
-	chapter, _ := regexp.Compile(`<h[1-6]`)
-
-	for i, line := range fullhtml {
-		if paragraphbegin.MatchString(strings.ToLower(line)) {
-			begin = i
-		} 
-        if paragraphend.MatchString(strings.ToLower(line)) {
-			end = i + 1
-			booktext = append(booktext, strings.
-				Join(fullhtml[begin:end], " "))
-		} 
-        if chapter.MatchString(strings.ToLower(line)) {
-			booktext = append(booktext, line)
-			booktext = append(booktext, fullhtml[i+1])
-		}
-	}
-	booktext = append(booktext, "<h5><i>Fin.</i></h5>")
-	return
-}
-
-func SplitTextNode(fullhtml []string) []string {                                 
+func SplitText(fullhtml []string) []string {                                 
     var booktext []string
     text := strings.Join(fullhtml, " ")
     doc, _ := html.Parse(strings.NewReader(text))
@@ -209,59 +182,6 @@ func renderNode(n *html.Node) string {
     return buf.String()
 }
 
-// No longer using Token because it would split lines with new tags, e.g. <i>
-func SplitTextToken(fullhtml []string) {
-    text := strings.Join(fullhtml, " ")
-    reader := strings.NewReader(text)
-    tokenizer := html.NewTokenizer(reader)
-
-    textTags := []string {
-        "p", "h1", "h2", "h3", "h4", "h5", "h6",
-    }
-
-    tag := ""
-    enter := false
-    
-    for {
-        tt := tokenizer.Next()
-        t := tokenizer.Token()
-
-        err := tokenizer.Err()
-        if err == io.EOF {
-            break
-        }
-
-        switch tt {
-        case html.ErrorToken:
-            log.Fatal(err)
-        case html.StartTagToken, html.SelfClosingTagToken:
-            if enter {
-                break
-            }
-            tag = t.Data
-
-            for _, ttt := range textTags {
-                if tag == ttt {
-                    enter = true
-                    break
-                }
-            }
-        case html.EndTagToken:
-            // if EndTagToken != tag: break
-            if t.Data != tag {
-                break
-            }
-            enter = false
-        case html.TextToken:
-            if enter {
-                data := strings.TrimSpace(t.Data)
-                if len(data) > 0 {
-                    fmt.Println(data)
-                }
-            }
-        }
-    }
-}
 
 /*** Getter Functions ***/
 
@@ -271,8 +191,6 @@ func BookPrinter(book Book) {
 	println("Language: ", book.language)
 	//println(book.booktext[book.paragraph])
 	//fmt.Println(book.fulltext)
-    //SplitTextToken(book.fulltext)
-    SplitTextNode(book.fulltext)
 }
 
 func Init() (string, string, int) {
