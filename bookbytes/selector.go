@@ -44,8 +44,8 @@ func GetFile(booklist string) (filename string) {
 	filename = filename[:len(filename)-1]
 
 	println("File: ../library/htmlmirror/" + filename[2:])
-	//return "../library/htmlmirror/" + filename[2:]
-    return "docs/11-h.htm"
+	return "../library/htmlmirror/" + filename[2:]
+    //return "docs/11-h.htm"
     //return "../library/htmlmirror/6/3/7/7/63772/63772-h/63772-h.htm"
 }
 
