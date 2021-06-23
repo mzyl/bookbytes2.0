@@ -1,4 +1,3 @@
-// credit to Christian Bargmann (cbrgm)
 package main
 
 import (
