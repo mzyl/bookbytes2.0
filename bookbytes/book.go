@@ -26,30 +26,8 @@ type Book struct {
 	chapter        string
 	paragraph      int
 }
-/*
-// TODO: Find solution to eliminate one of these functions.
-func NewBook() Book {
-	filename := GetFile("booklist.txt")
-	fullhtml := GetContents(filename)
-	fulltext := StripLicense(fullhtml)
-	booktext := SplitTextNode(fulltext)
-	chaprefs := SetChapterReferences(booktext)
-	return Book{
-		filename:       filename,
-		fullhtml:       fullhtml,
-		fulltext:       fulltext,
-		title:          SetTitle(fullhtml),
-		author:         SetAuthor(fullhtml),
-		language:       SetLanguage(fullhtml),
-		booktext:       booktext,
-		chaprefs:       chaprefs,
-		currentchapref: 0,
-		chapter:        "",
-		paragraph:      0,
-	}
-}
-*/
-func NewBookFromFilename(filename string, paragraph int) Book {
+
+func GenerateBook(filename string, paragraph int) Book {
 	fullhtml := GetContents(filename)
 	fulltext := StripLicense(fullhtml)
 	booktext := SplitTextNode(fulltext)
@@ -110,7 +88,7 @@ func SetChapterReferences(booktext []string) (chaprefs []int) {
 }
 
 func SetChapter(filename string, paragraph int) (string, int) {
-	book := NewBookFromFilename(filename, paragraph)
+	book := GenerateBook(filename, paragraph)
 	var begin int
 	var end int
 	var beginindex int
@@ -298,15 +276,8 @@ func BookPrinter(book Book) {
 }
 
 func Init() (string, string, int) {
-    // get new filename
-    // set book to newbookfromfilename
-    // remove the need for newbookfromfilename
-    // rename newbookfromfilename to newbook
 	filename := GetFile("booklist.txt")
-    book := NewBookFromFilename(filename, 0)
-
-	//book := NewBook()
-	//filename := book.filename
+    book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
 	return paragraph, filename, index
@@ -317,7 +288,7 @@ func GetFilename(book Book) string {
 }
 
 func GetNewParagraph(filename string) (string, int) {
-	book := NewBookFromFilename(filename, 0)
+	book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
 	return paragraph, index
@@ -336,7 +307,7 @@ func GetLanguage(book Book) string {
 }
 
 func GetInfo(filename string) string {
-	book := NewBookFromFilename(filename, 0)
+	book := GenerateBook(filename, 0)
 	return "This passage is from " + "<i>" + GetTitle(book) + "</i>" +
 		" written by " + GetAuthor(book) + " in " + GetLanguage(book) + "."
 }
@@ -346,13 +317,13 @@ func GetParagraphIndex(book Book) int {
 }
 
 func GetNextParagraph(filename string, paragraph int) string {
-	book := NewBookFromFilename(filename, paragraph)
+	book := GenerateBook(filename, paragraph)
 	book.paragraph = paragraph + 1
 	return book.booktext[book.paragraph]
 }
 
 func GetPreviousParagraph(filename string, paragraph int) string {
-	book := NewBookFromFilename(filename, paragraph)
+	book := GenerateBook(filename, paragraph)
 	book.paragraph = paragraph - 1
 	return book.booktext[book.paragraph]
 }
@@ -363,7 +334,7 @@ func GetChapter(filename string, paragraph int) (string, int) {
 }
 
 func GetNextChapter(filename string, index int) (string, int) {
-	book := NewBookFromFilename(filename, 0)
+	book := GenerateBook(filename, 0)
 	begin := book.chaprefs[index+1]
 	end := book.chaprefs[index+2]
 	chapter := strings.Join(book.booktext[begin:end], " ")
@@ -372,7 +343,7 @@ func GetNextChapter(filename string, index int) (string, int) {
 }
 
 func GetPreviousChapter(filename string, index int) (string, int) {
-	book := NewBookFromFilename(filename, 0)
+	book := GenerateBook(filename, 0)
 	begin := book.chaprefs[index-1]
 	end := book.chaprefs[index]
 	chapter := strings.Join(book.booktext[begin:end], " ")
@@ -381,7 +352,7 @@ func GetPreviousChapter(filename string, index int) (string, int) {
 }
 
 func GetFirstChapter(filename string) (string, int) {
-	book := NewBookFromFilename(filename, 0)
+	book := GenerateBook(filename, 0)
 	begin := book.chaprefs[0]
 	end := book.chaprefs[1]
 	chapter := strings.Join(book.booktext[begin:end], " ")
