@@ -2,12 +2,13 @@ package bookbytes
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"math/rand"
 	"os"
 	"strconv"
 	"time"
+
+    "golang.org/x/net/html/charset"
 )
 
 func GetFile(booklist string) (filename string) {
@@ -46,7 +47,7 @@ func GetFile(booklist string) (filename string) {
 	println("File: ../library/htmlmirror/" + filename[2:])
 	return "../library/htmlmirror/" + filename[2:]
 	//return "docs/11-h.htm"
-	//return "../library/htmlmirror/6/3/7/7/63772/63772-h/63772-h.htm"
+	//return "../library/htmlmirror/4/8/8/2/48827/48827-h/48827-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
@@ -56,12 +57,17 @@ func GetContents(filename string) (text []string) {
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+    // TODO:
+    // converts charmap based on what it finds in the file, 
+    // but defaults to windows1252 if it can't find a utf option.
+    // may need to parse this more strictly if errors start coming up.
+    // i.e. ISO-8859-1 instead of Windows1252
+    reader, err := charset.NewReader(file, "")
+
+	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		text = append(text, scanner.Text())
 	}
-	//fmt.Println(text)
-	fmt.Println(len(text))
 	return
 }
 
