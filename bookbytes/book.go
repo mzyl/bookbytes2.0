@@ -102,8 +102,7 @@ func SetChapter(filename string, paragraph int) (string, int) {
 // I think regexp is fine to use here.
 func StripLicense(fullhtml []string) []string {
 	var booktext []string
-	begin := -1
-	end := -1
+	begin, end := -1, -1
 	match, _ := regexp.Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
 
 	for i, line := range fullhtml {
