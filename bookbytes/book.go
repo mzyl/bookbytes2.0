@@ -79,7 +79,6 @@ func SetChapterReferences(booktext []string) (chaprefs []int) {
 		}
 	}
 	chaprefs = append(chaprefs, len(booktext))
-	println("Chapters found: ", len(chaprefs)-1)
 	return
 }
 
@@ -108,10 +107,10 @@ func StripLicense(fullhtml []string) []string {
 	for i, line := range fullhtml {
 		if match.MatchString(line) {
 			if begin == -1 {
-				println("Found Start")
+				//println("Found Start")
 				begin = i + 1
 			} else {
-				println("Found End")
+				//println("Found End")
 				end = i - 1
 				break
 			}
@@ -154,7 +153,6 @@ func SplitText(fullhtml []string) []string {
 		if node.Type == html.ElementNode && enter {
 			body = node
 			booktext = append(booktext, renderNode(body))
-			//fmt.Println(renderNode(body))
 			enter = false
 			return
 		}
@@ -182,7 +180,6 @@ func BookPrinter(book Book) {
 	println("Author: ", book.author)
 	println("Language: ", book.language)
 	//println(book.booktext[book.paragraph])
-	//fmt.Println(book.fulltext)
 }
 
 func Init() (string, string, int) {
@@ -190,6 +187,7 @@ func Init() (string, string, int) {
 	book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
+	println("Chapters found: ", len(book.chaprefs)-1)
 	return paragraph, filename, index
 }
 
