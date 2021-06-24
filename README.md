@@ -3,13 +3,9 @@
 Things are coming together.
 
 ### Goals
-- [ ] Address some "problems"
-- [x] Begin addressing the sessions problem
-    - Maybe try implementing sessions elsewhere, then bring the idea back here
-- [x] Text field reset on button press
-- [x] Grab and display language in Info
-    - Will be useful for filter option later
-- [ ] Clean up/Refactor functions
+- [x] Get new font working on web
+    - Files that did not use UTF-8 charmap are now converted before being read by Bufio
+
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -18,9 +14,9 @@ Things are coming together.
 - [x] Solution for reading more of the book i.e. forward-backward are not so great for dialog
     - Field is now scrollable
 - [x] Work with whole book library
-- [ ] Host locally on server
-- [ ] Find font that contains virtually all characters
-    - Maybe this doesn't exist like I thought it did
+- [x] Host locally on server
+- [x] Find font that contains virtually all characters
+    - Was less of a font issue and more of an encoding issue when being read by Bufio
 - [ ] About page, what else is coming, etc.
 
 ### Ordered Plan
@@ -28,9 +24,9 @@ Things are coming together.
 - [x] Pull html documents out of full library
     - rsync can do this for me
 - [ ] Explore ideas for segmenting chapters and other print section formats
-    - Lots of progress made here thanks to PyrO
+    - now using html.Node with good success
         - Needs more refining before release
-- [ ] Host locally from server
+- [x] Host locally from server
 - [x] Reimplement so each connection to site gets a different session
 - [ ] Finalize web interface
 - [ ] Add feedback solution
@@ -42,7 +38,7 @@ Things are coming together.
 - Chapters are not all marked the same.....
     - This is working better, but not perfectly.
 - Same book is served to all users and changes made, i.e. new book/paragaph, effect all users.
-    - This was fixed by passing filename data to and from browser on each request.
+    - This was fixed by passing filename data to and from browser on each request, aka Restful API.
 - Scrollable page and div doesn't work well on mobile.
     - Also seems to be a slight input lag on mobile?
 - 3/1/3/4/31342/31342-h/313420h.htm returns only "Fin."
@@ -66,6 +62,7 @@ Things are coming together.
 - Eventually would like to have accounts to save the reader's place.
     - Accounts may be able to generate random paragraphs from specific books they have enjoyed in the past.
 - May want to filter for English texts.
+- It's like "I'm Feeling Lucky" for Project Gutenberg.
 
 ### Issues found with text parsing
 #### Need to replace most Regexp with Tokenizer
