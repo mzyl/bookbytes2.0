@@ -83,7 +83,6 @@ func generate() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		body, err := ioutil.ReadAll(r.Body)
 		filename := string(body)
-		println("Filename:", filename)
 		paragraph, index := bookbytes.GetNewParagraph(filename)
 		var resp = Response{
 			Headline:  paragraph,
@@ -104,7 +103,6 @@ func info() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		body, err := ioutil.ReadAll(r.Body)
 		filename := string(body)
-		println("Filename:", filename)
 		var resp = Response{
 			Info: bookbytes.GetInfo(filename),
 		}
@@ -125,7 +123,6 @@ func nextpg() HandlerFunc {
 		data := strings.Split(string(body), ",")
 		filename := data[0]
 		index, _ := strconv.Atoi(data[1])
-		println("Filename:", filename)
 		var resp = Response{
 			Headline:  bookbytes.GetNextParagraph(filename, index),
 			Paragraph: index + 1,
@@ -147,7 +144,6 @@ func prevpg() HandlerFunc {
 		data := strings.Split(string(body), ",")
 		filename := data[0]
 		index, _ := strconv.Atoi(data[1])
-		println("Filename:", filename)
 		var resp = Response{
 			Headline:  bookbytes.GetPreviousParagraph(filename, index),
 			Paragraph: index - 1,
@@ -169,7 +165,6 @@ func chapter() HandlerFunc {
 		data := strings.Split(string(body), ",")
 		filename := data[0]
 		index, _ := strconv.Atoi(data[1])
-		println("Filename:", filename)
 		chapter, chapterref := bookbytes.GetChapter(filename, index)
 		var resp = Response{
 			Headline: chapter,
@@ -192,7 +187,6 @@ func nextchapter() HandlerFunc {
 		data := strings.Split(string(body), ",")
 		filename := data[0]
 		index, _ := strconv.Atoi(data[1])
-		println("Filename:", filename)
 		chapter, chapterref := bookbytes.GetNextChapter(filename, index)
 		var resp = Response{
 			Headline: chapter,
@@ -215,7 +209,6 @@ func prevchapter() HandlerFunc {
 		data := strings.Split(string(body), ",")
 		filename := data[0]
 		index, _ := strconv.Atoi(data[1])
-		println("Filename:", filename)
 		chapter, chapterref := bookbytes.GetPreviousChapter(filename, index)
 		var resp = Response{
 			Headline: chapter,
@@ -236,7 +229,6 @@ func beginning() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 		body, err := ioutil.ReadAll(r.Body)
 		filename := string(body)
-		println("Filename:", filename)
 		chapter, chapterref := bookbytes.GetFirstChapter(filename)
 		var resp = Response{
 			Headline: chapter,
