@@ -65,7 +65,6 @@ Things are coming together.
 - It's like "I'm Feeling Lucky" for Project Gutenberg.
 
 ### Issues found with text parsing
-#### Need to replace most Regexp with Tokenizer
 - [ ] Section wrapped in pre or span, not p.
 - [x] Licensing information wrapped in p and span, not plain text.
 - [x] No START or END, no text is appended in StripLiecense().
