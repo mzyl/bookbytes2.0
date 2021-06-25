@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-    "golang.org/x/net/html/charset"
+	"golang.org/x/net/html/charset"
 )
 
 func GetFile(booklist string) (filename string) {
@@ -57,12 +57,12 @@ func GetContents(filename string) (text []string) {
 	}
 	defer file.Close()
 
-    // TODO:
-    // converts charmap based on what it finds in the file, 
-    // but defaults to windows1252 if it can't find a utf option.
-    // may need to parse this more strictly if errors start coming up.
-    // i.e. ISO-8859-1 instead of Windows1252
-    reader, err := charset.NewReader(file, "")
+	// TODO:
+	// converts charmap based on what it finds in the file,
+	// but defaults to windows1252 if it can't find a utf option.
+	// may need to parse this more strictly if errors start coming up.
+	// i.e. ISO-8859-1 instead of Windows1252
+	reader, err := charset.NewReader(file, "")
 
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
