@@ -12,7 +12,7 @@ import (
 type Book struct {
 	filename       string
 	fullhtml       []string
-	fulltext       []string
+	fulltext       string
 	title          string
 	author         string
 	language       string
@@ -99,7 +99,7 @@ func SetChapter(filename string, paragraph int) (string, int) {
 }
 
 // I think regexp is fine to use here.
-func StripLicense(fullhtml []string) []string {
+func StripLicense(fullhtml []string) string {
 	var booktext []string
 	begin, end := -1, -1
 	match, _ := regexp.Compile(`\*{3} *((?:START|END)[\w\W]+)\*{3}`)
@@ -123,13 +123,13 @@ func StripLicense(fullhtml []string) []string {
 	for _, line := range fullhtml[begin:end] {
 		booktext = append(booktext, line)
 	}
-	return booktext
+	text := strings.Join(booktext, " ")
+	return text
 }
 
-func SplitText(fullhtml []string) []string {
+func SplitText(fulltext string) []string {
 	var booktext []string
-	text := strings.Join(fullhtml, " ")
-	doc, _ := html.Parse(strings.NewReader(text))
+	doc, _ := html.Parse(strings.NewReader(fulltext))
 
 	var body *html.Node
 	var crawler func(*html.Node)
@@ -193,6 +193,10 @@ func Init() (string, string, int) {
 
 func GetFilename(book Book) string {
 	return book.filename
+}
+
+func GetFulltext(book Book) string {
+    return book.fulltext
 }
 
 func GetNewParagraph(filename string) (string, int) {
