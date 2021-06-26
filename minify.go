@@ -13,6 +13,7 @@ func main() {
     // gen book
     // (book.fulltext might actually be a minified version already)
     // write book.fulltext to ../minified/book.filename
+    var line string
     var filename string
     var count int
 
@@ -24,8 +25,8 @@ func main() {
     defer file.Close()
 
     for booklist.Scan() {
-        file = booklist.Text()
-        filename = "../library/htmlmirror/" + file[2:0]
+        line = booklist.Text()
+        filename = "../library/htmlmirror/" + line[2:]
         book := bookbytes.GenerateBook(filename, 0)
         println(filename)
         bookbytes.BookPrinter(book)
