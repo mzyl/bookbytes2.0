@@ -5,6 +5,7 @@ Things are coming together.
 ### Goals
 - [x] Get new font working on web
     - Files that did not use UTF-8 charmap are now converted before being read by Bufio
+- [ ] Make minified versions of html library to fit on digitalocean droplet
 
 
 ### Goals for Release
