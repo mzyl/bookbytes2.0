@@ -24,7 +24,8 @@ func main() {
     defer file.Close()
 
     for booklist.Scan() {
-        filename = booklist.Text()
+        file = booklist.Text()
+        filename = "../library/htmlmirror/" + file[2:0]
         book := bookbytes.GenerateBook(filename, 0)
         println(filename)
         bookbytes.BookPrinter(book)
