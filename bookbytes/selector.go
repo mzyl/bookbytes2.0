@@ -2,6 +2,7 @@ package bookbytes
 
 import (
 	"bufio"
+    "compress/bzip2"
 	"log"
 	"math/rand"
 	"os"
@@ -14,7 +15,7 @@ import (
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
 	// number of bytes in booklist.txt
-	bytes, err := os.Open("bytecount.txt")
+	bytes, err := os.Open("docbytecount.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,24 +46,31 @@ func GetFile(booklist string) (filename string) {
 	filename = filename[:len(filename)-1]
 
 	println("File: ../library/htmlmirror/" + filename[2:])
-	return "../library/htmlmirror/" + filename[2:]
+	//return "../library/htmlmirror/" + filename[2:]
 	//return "docs/11-h.htm"
+    //return "../library/minified/120-h.htm"
+    return "docs/" + filename[2:]
 	//return "../library/htmlmirror/4/8/8/2/48827/48827-h/48827-h.htm"
 }
 
 func GetContents(filename string) (text []string) {
+    println("filename in contents: ", filename)
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
+
+    // gzip to come here
+    zip := bzip2.NewReader(file)
+
 	// TODO:
 	// converts charmap based on what it finds in the file,
 	// but defaults to windows1252 if it can't find a utf option.
 	// may need to parse this more strictly if errors start coming up.
 	// i.e. ISO-8859-1 instead of Windows1252
-	reader, err := charset.NewReader(file, "")
+	reader, err := charset.NewReader(zip, "")
 
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
