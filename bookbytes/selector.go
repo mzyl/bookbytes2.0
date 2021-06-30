@@ -15,7 +15,7 @@ import (
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
 	// number of bytes in booklist.txt
-	bytes, err := os.Open("docbytecount.txt")
+	bytes, err := os.Open("compressedbytecount.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,11 +45,15 @@ func GetFile(booklist string) (filename string) {
 	filename, err = files.ReadString('\n')
 	filename = filename[:len(filename)-1]
 
-	println("File: ../library/htmlmirror/" + filename[2:])
+	//println("File: ../library/htmlmirror/" + filename[2:])
 	//return "../library/htmlmirror/" + filename[2:]
+    
+    println("File: ../library/compressed/" + filename[2:])
+    return "../library/compressed/" + filename[2:]
+
 	//return "docs/11-h.htm"
     //return "../library/minified/120-h.htm"
-    return "docs/" + filename[2:]
+    //return "docs/" + filename[2:]
 	//return "../library/htmlmirror/4/8/8/2/48827/48827-h/48827-h.htm"
 }
 
