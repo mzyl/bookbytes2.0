@@ -183,7 +183,7 @@ func BookPrinter(book Book) {
 }
 
 func Init() (string, string, int) {
-	filename := GetFile("doclist.txt")
+	filename := GetFile("booklist.txt")
 	book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
