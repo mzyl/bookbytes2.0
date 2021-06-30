@@ -2,11 +2,24 @@
 #### Short book passages to pique your interest
 Things are coming together.
 
+### We have 3 goals sections, why not a 4th?
+- [ ] Consider adjustments for web interface
+    - Find a way to leave feedback while you're here
+- [ ] Troubleshoot books that do not have contents returned properly
+    - I'm thinking I may have to do some cases based on Node.next or something
+    - if div found, check for p next, if no p, just use div.. etc....
+- [ ] Find a way to keep a record of which books are more popular
+    - Probably just based on which book get the most requests after they are presented, I don't know..
+- [ ] Consider if a genre feature can be implemented
+- [ ] Consider building a language filter
+- [ ] Implement tests
+- [ ] Implement flags
+
 ### Goals
 - [x] Get new font working on web
     - Files that did not use UTF-8 charmap are now converted before being read by Bufio
-- [ ] Make minified versions of html library to fit on digitalocean droplet
-
+- [x] Make minified versions of html library to fit on digitalocean droplet
+    - No minified, bzip2 compressed version being made now
 
 ### Goals for Release
 - [x] Able to display title and author
@@ -55,9 +68,6 @@ Things are coming together.
     - maybe we just display the texts we have working sufficiently for release.
 - ~~Maybe store list of files in text for Go to reference instead of rescanning the files on startup.~~
     - This has been implemented with the help of ikiris.
-
-### Things that could be improved
-- [ ] Chapter selection could use some help
 
 ### Future ideas
 - Eventually would like to have accounts to save the reader's place.
