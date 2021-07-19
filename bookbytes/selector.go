@@ -15,10 +15,19 @@ import (
 func GetFile(booklist string) (filename string) {
 	rand.Seed(time.Now().UnixNano())
 	// number of bytes in booklist.txt
-	bytes, err := os.Open("compressedbytecount.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+    bytes, err := os.Open("")
+    switch booklist {
+    case "compressedbooklist.txt" :   
+        bytes, err = os.Open("compressedbytecount.txt")
+        if err != nil {
+            log.Fatal(err)
+        }
+    case "doclist.txt" :
+        bytes, err = os.Open("docbytecount.txt")
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
 	defer bytes.Close()
 
 	// TODO: Consider a better solution for getting a number out of a file.

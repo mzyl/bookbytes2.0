@@ -182,13 +182,12 @@ func BookPrinter(book Book) {
 	//println(book.booktext[book.paragraph])
 }
 
-func Init() (string, string, int) {
-	filename := GetFile("compressedbooklist.txt")
+func Init(filename string) (string, int) {
 	book := GenerateBook(filename, 0)
 	index := NewParagraph(book)
 	paragraph := book.booktext[index]
 	println("Chapters found: ", len(book.chaprefs)-1)
-	return paragraph, filename, index
+	return paragraph, index
 }
 
 func GetFilename(book Book) string {

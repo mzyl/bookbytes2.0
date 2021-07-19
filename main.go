@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+    "flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -28,14 +29,33 @@ type Response struct {
 	Chapter   int    `json:"chapter"`
 }
 
+var args = flag.String("file", "", "The book we want to view.")
+//flag.StringVar(&args, "file", "", "The book we want to view.")
+
 func main() {
 	rand.Seed(time.Now().Unix())
+
+    var filename string
+    flag.Parse()
+    if *args != "" {
+        // if test then filename = docs/
+        if *args == "test" {
+            println("test")
+            filename = bookbytes.GetFile("doclist.txt")
+        } else {
+            println(*args)
+            filename = *args
+        }
+    } else {
+        println("compressed")
+        filename = bookbytes.GetFile("compressedbooklist.txt")
+    }
 
 	c := Config{
 		HttpAddr: ":8080",
 	}
 
-	arg.MustParse(&c)
+	arg.Parse(&c)
 
 	r := chi.NewRouter()
 	r.Get("/", HandleFunc(file("./web/index.html")))
@@ -49,7 +69,7 @@ func main() {
 	r.Post("/nextchapter", HandleFunc(nextchapter()))
 	r.Post("/prevchapter", HandleFunc(prevchapter()))
 	r.Post("/beginning", HandleFunc(beginning()))
-	r.Post("/newbook", HandleFunc(newbook()))
+	r.Post("/newbook", HandleFunc(newbook(filename)))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
 		log.Fatal(err)
@@ -245,9 +265,9 @@ func beginning() HandlerFunc {
 	}
 }
 
-func newbook() HandlerFunc {
+func newbook(filename string) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
-		paragraph, filename, index := bookbytes.Init()
+		paragraph, index := bookbytes.Init(filename)
 		var resp = Response{
 			Headline:  paragraph,
 			Filename:  filename,
