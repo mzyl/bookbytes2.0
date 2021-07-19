@@ -53,7 +53,7 @@ func main() {
 	r.Post("/nextchapter", HandleFunc(nextchapter()))
 	r.Post("/prevchapter", HandleFunc(prevchapter()))
 	r.Post("/beginning", HandleFunc(beginning()))
-	r.Post("/newbook", HandleFunc(newbook(filename)))
+	r.Post("/newbook", HandleFunc(newbook()))
 
 	if err := http.ListenAndServe(c.HttpAddr, r); err != nil {
 		log.Fatal(err)
@@ -249,7 +249,7 @@ func beginning() HandlerFunc {
 	}
 }
 
-func newbook(filename string) HandlerFunc {
+func newbook() HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
 
         var filename string
