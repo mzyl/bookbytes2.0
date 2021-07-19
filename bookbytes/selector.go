@@ -56,9 +56,14 @@ func GetFile(booklist string) (filename string) {
 
 	//println("File: ../library/htmlmirror/" + filename[2:])
 	//return "../library/htmlmirror/" + filename[2:]
-    
-    println("File: ../library/compressed/" + filename[2:])
-    return "../library/compressed/" + filename[2:]
+    switch booklist{
+    case "compressedbooklist.txt" :
+        println("File: ../library/compressed/" + filename[2:])
+        return "../library/compressed/" + filename[2:]
+    case "doclist.txt" :
+        println("File: docs/" + filename[2:])
+        return "docs/" + filename[2:]
+    }
 
 	//return "docs/11-h.htm"
     //return "../library/minified/120-h.htm"
