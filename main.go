@@ -35,22 +35,6 @@ var args = flag.String("file", "", "The book we want to view.")
 func main() {
 	rand.Seed(time.Now().Unix())
 
-    var filename string
-    flag.Parse()
-    if *args != "" {
-        // if test then filename = docs/
-        if *args == "test" {
-            println("test")
-            filename = bookbytes.GetFile("doclist.txt")
-        } else {
-            println(*args)
-            filename = *args
-        }
-    } else {
-        println("compressed")
-        filename = bookbytes.GetFile("compressedbooklist.txt")
-    }
-
 	c := Config{
 		HttpAddr: ":8080",
 	}
@@ -267,6 +251,23 @@ func beginning() HandlerFunc {
 
 func newbook(filename string) HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) (int, error) {
+
+        var filename string
+        flag.Parse()
+        if *args != "" {
+            // if test then filename = docs/
+            if *args == "test" {
+                println("test")
+                filename = bookbytes.GetFile("doclist.txt")
+            } else {
+                println(*args)
+                filename = *args
+            }
+        } else {
+            println("compressed")
+            filename = bookbytes.GetFile("compressedbooklist.txt")
+        }
+
 		paragraph, index := bookbytes.Init(filename)
 		var resp = Response{
 			Headline:  paragraph,
