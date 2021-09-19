@@ -5,9 +5,11 @@ import (
 )
 
 func main() {
-    //filename := bookbytes.GetFile("booklist.txt")
+    filename := bookbytes.GetFile("compressedbooklist.txt")
 	//book := bookbytes.GenerateBook(filename, 0)
-    book := bookbytes.Init()
+    paragraph, index := bookbytes.Init(filename)
+    book := bookbytes.GenerateBook(filename, index)
 	bookbytes.BookPrinter(book)
+    println(paragraph)
 	//bookbytes.SplitTextToken(book.fullhtml)
 }
